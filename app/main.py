@@ -59,12 +59,19 @@ class AgentRunRequest(BaseModel):
 
 @app.get("/health")
 def health_check():
-    """Health check endpoint for Render/uptime monitoring."""
+    """Health check endpoint showing active API status & masked key."""
+    import os
+    raw_key = settings.GEMINI_API_KEY or os.getenv("GEMINI_API_KEY", "")
+    key_set = bool(raw_key and raw_key.strip() and raw_key.strip() not in ("your_gemini_api_key_here", "your_anthropic_api_key_here"))
+    masked_key = (raw_key[:8] + "..." + raw_key[-4:]) if (key_set and len(raw_key) > 12) else "Not Configured"
     return {
         "status": "ok",
-        "timestamp": datetime.datetime.now().isoformat(),
-        "model": settings.GEMINI_MODEL
+        "gemini_connected": key_set,
+        "masked_api_key": masked_key,
+        "active_model": settings.GEMINI_MODEL,
+        "timestamp": datetime.datetime.now().isoformat()
     }
+
 
 
 @app.post("/api/agent/run")

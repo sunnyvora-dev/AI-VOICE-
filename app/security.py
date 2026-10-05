@@ -52,16 +52,26 @@ def check_security(request: Request, user_text: str = None):
     record[1] += 1
 
 
-def verify_api_key(api_key: str = Security(api_key_header)):
+def verify_api_key(request: Request, api_key: str = Security(api_key_header)):
     """
     Validates X-API-Key header against configured API_KEY setting.
-    If API_KEY is set in settings (and not placeholder), request must match API_KEY.
+    Allows same-origin browser requests and placeholder configurations automatically.
     """
     configured_key = settings.API_KEY.strip() if settings.API_KEY else ""
-    if configured_key and configured_key not in ("your_secret_api_key_here", ""):
-        if not api_key or api_key != configured_key:
-            raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Invalid or missing X-API-Key header."
-            )
+    if not configured_key or configured_key.lower() in ("your_secret_api_key_here", "your_api_key_here", "none", "change_me", "default"):
+        return api_key
+
+    # Allow browser UI requests from same origin/referer
+    host = request.headers.get("host", "")
+    referer = request.headers.get("referer", "")
+    origin = request.headers.get("origin", "")
+    if host and (host in referer or host in origin):
+        return api_key
+
+    if not api_key or api_key != configured_key:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid or missing X-API-Key header."
+        )
     return api_key
+

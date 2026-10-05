@@ -3,7 +3,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    GEMINI_API_KEY: str = "AIzaSyDMzrSV2h08c8QD6OCLluYnI_FkqgJY8Uo"
+    GEMINI_API_KEY: str = ""
     GEMINI_MODEL: str = "gemini-3.1-flash-lite"
     API_KEY: str = ""
     TWILIO_AUTH_TOKEN: str = ""

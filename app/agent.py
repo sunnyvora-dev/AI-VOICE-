@@ -123,32 +123,41 @@ def run_agent_loop(
     tools_used = []
     final_reply = ""
 
-    try:
-        if client is None:
-            client = genai.Client(
-                api_key=api_key,
-                http_options=types.HttpOptions(timeout=30000)
+    candidate_models = [settings.GEMINI_MODEL, "gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash"]
+    # De-duplicate preserving order
+    models_to_try = list(dict.fromkeys(m for m in candidate_models if m))
+
+    if client is None:
+        client = genai.Client(
+            api_key=api_key,
+            http_options=types.HttpOptions(timeout=30000)
+        )
+
+    config = types.GenerateContentConfig(
+        system_instruction=SYSTEM_PROMPT,
+        tools=SAFE_TOOL_FUNCTIONS
+    )
+
+    last_error = None
+    for model_name in models_to_try:
+        try:
+            chat = client.chats.create(
+                model=model_name,
+                config=config
             )
+            response = chat.send_message(user_text)
+            if response and hasattr(response, 'text') and response.text:
+                final_reply = response.text.strip()
+                break
+        except Exception as exc:
+            last_error = exc
+            logger.warning(f"Gemini API model {model_name} failed: {exc}. Trying next candidate model...")
+            continue
 
-        config = types.GenerateContentConfig(
-            system_instruction=SYSTEM_PROMPT,
-            tools=SAFE_TOOL_FUNCTIONS
-        )
-
-        chat = client.chats.create(
-            model=settings.GEMINI_MODEL,
-            config=config
-        )
-
-        response = chat.send_message(user_text)
-
-        if response and hasattr(response, 'text') and response.text:
-            final_reply = response.text.strip()
-
-    except Exception as exc:
-        err_str = str(exc)
-        logger.warning(f"Gemini API call failed: {err_str}. Falling back to offline tool engine...")
+    if not final_reply and last_error:
+        logger.warning(f"All Gemini models failed. Last error: {last_error}. Falling back to offline tool engine...")
         return _fallback_agent_response(session_id, user_text, user_confirmed, db)
+
 
     if not final_reply:
         final_reply = "I completed the requested operation."

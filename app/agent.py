@@ -125,7 +125,7 @@ def run_agent_loop(
     tools_used = []
     final_reply = ""
 
-    candidate_models = [settings.GEMINI_MODEL, "gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash", "gemini-1.5-pro"]
+    candidate_models = [settings.GEMINI_MODEL, "gemini-2.0-flash-lite", "gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash", "gemini-1.5-flash-8b"]
     models_to_try = list(dict.fromkeys(m for m in candidate_models if m))
 
     last_error = None
@@ -155,7 +155,10 @@ def run_agent_loop(
                     except Exception as exc:
                         last_error = exc
                         err_str = str(exc).lower()
-                        if "429" in err_str or "503" in err_str or "quota" in err_str or "rate" in err_str:
+                        if "invalid_argument" in err_str or "unexpected model" in err_str or "400" in err_str:
+                            logger.warning(f"Invalid model slug '{model_name}': {exc}. Skipping instantly to next valid model...")
+                            break  # Skip bad model name immediately without retrying/backing off
+                        elif "429" in err_str or "503" in err_str or "quota" in err_str or "rate" in err_str:
                             logger.warning(f"Gemini {model_name} rate/capacity limit hit (Attempt {attempt+1}): {exc}. Backing off...")
                             import time
                             time.sleep(1.2 * (attempt + 1))

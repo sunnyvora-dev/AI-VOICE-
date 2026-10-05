@@ -125,7 +125,7 @@ def run_agent_loop(
     tools_used = []
     final_reply = ""
 
-    candidate_models = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash", "gemini-1.5-pro", settings.GEMINI_MODEL]
+    candidate_models = [settings.GEMINI_MODEL, "gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash", "gemini-1.5-pro"]
     models_to_try = list(dict.fromkeys(m for m in candidate_models if m))
 
     last_error = None

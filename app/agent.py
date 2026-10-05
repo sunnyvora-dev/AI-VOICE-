@@ -225,7 +225,11 @@ def _fallback_agent_response(
     tools_used = []
     needs_confirmation = False
 
-    if "time" in text_lower or "clock" in text_lower:
+    if "sunny" in text_lower:
+        reply = "Sunny is the creator and developer of this Vocalis Voice AI system! How can I assist you with the project today?"
+    elif "who are you" in text_lower or "your name" in text_lower or "what are you" in text_lower:
+        reply = "I am Vocalis AI, your real-time voice and task intelligence assistant."
+    elif "time" in text_lower or "clock" in text_lower:
         tool_res = execute_tool("current_time", {}, session_id, db)
         tools_used.append("current_time")
         reply = f"The current server time is: {tool_res['output']}"
@@ -256,8 +260,10 @@ def _fallback_agent_response(
         tool_res = execute_tool("git_status", {}, session_id, db)
         tools_used.append("git_status")
         reply = f"Git status: {tool_res['output']}"
+    elif "weather" in text_lower:
+        reply = f"I heard: '{user_text}'. Check local forecasts for real-time weather details."
     else:
-        reply = f"I heard: '{user_text}'. I am ready to help you with system status, file lists, docker commands, or time."
+        reply = f"I heard: '{user_text}'. I am ready to assist you with system operations, information, or voice commands."
 
     save_message(session_id, "assistant", reply, db)
     return {
@@ -265,3 +271,4 @@ def _fallback_agent_response(
         "tools_used": tools_used,
         "needs_confirmation": needs_confirmation
     }
+

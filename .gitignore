@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv/
+
+# Environment files
+.env
+
+# Database & SQLite
+*.db
+*.sqlite3
+data/
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+
+# Sandbox dynamic files
+sandbox/*
+!sandbox/.gitkeep

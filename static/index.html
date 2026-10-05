@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Vocalis.ai | Autonomous Voice Intelligence</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script id="tailwind-config">
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "surface": "#0f131d",
+                    "surface-dim": "#0f131d",
+                    "surface-bright": "#353944",
+                    "surface-container-lowest": "#0a0e18",
+                    "surface-container-low": "#171b26",
+                    "surface-container": "#1c1f2a",
+                    "surface-container-high": "#262a35",
+                    "surface-container-highest": "#313540",
+                    "on-surface": "#dfe2f1",
+                    "on-surface-variant": "#bcc9cd",
+                    "primary": "#4cd7f6",
+                    "primary-container": "#06b6d4",
+                    "on-primary-container": "#00424f",
+                    "secondary": "#c0c1ff",
+                    "secondary-container": "#3131c0",
+                    "tertiary": "#4fdbc8",
+                    "tertiary-container": "#1abaa8",
+                    "tertiary-fixed": "#71f8e4",
+                    "error": "#ffb4ab",
+                    "error-container": "#93000a",
+                    "outline": "#869397"
+                },
+                fontFamily: {
+                    "display-hero": ["Plus Jakarta Sans"],
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "headline-sm": ["Plus Jakarta Sans"],
+                    "body-lg": ["Inter"],
+                    "body-md": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "label-mono-lg": ["JetBrains Mono"],
+                    "label-mono-sm": ["JetBrains Mono"]
+                }
+            }
+        }
+    };
+    </script>
+    <style>
+        ::-webkit-scrollbar { display: none; }
+        .glass-panel {
+            background: rgba(23, 27, 38, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(134, 147, 151, 0.15);
+        }
+    </style>
+</head>
+<body class="bg-surface-container-lowest font-body-md text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container min-h-screen flex flex-col justify-between relative overflow-x-hidden" style='background-image: radial-gradient(circle at 50% 0%, rgba(6, 182, 212, 0.12) 0%, rgba(15, 19, 29, 0) 65%), linear-gradient(rgba(10, 14, 24, 0.94), rgba(15, 19, 29, 0.96)); background-size: cover; background-attachment: fixed;'>
+
+    <!-- Top Sticky Header -->
+    <header class="fixed top-0 left-0 right-0 w-full z-50 bg-surface-container-lowest/80 backdrop-blur-2xl shadow-[0_1px_16px_rgba(0,0,0,0.4)] border-b border-outline/10">
+        <div class="h-16 w-full max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between">
+            
+            <!-- Logo & Brand -->
+            <div class="flex items-center gap-6">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-primary-container to-tertiary flex items-center justify-center shadow-[0_0_16px_rgba(6,182,212,0.4)]">
+                        <span class="material-symbols-outlined text-on-primary-container font-bold text-xl">mic</span>
+                    </div>
+                    <span class="font-headline-sm text-lg text-on-surface tracking-tight font-bold">Vocalis.ai</span>
+                </div>
+                <div class="h-4 w-px bg-outline/20 hidden md:block"></div>
+                
+                <!-- Navigation Tabs -->
+                <nav class="hidden md:flex items-center gap-1">
+                    <button class="nav-tab px-4 py-1.5 rounded-full text-sm font-semibold transition-all bg-surface-container text-primary shadow-[inset_0_0_12px_rgba(6,182,212,0.15)] border border-primary/20" data-tab="assistant">
+                        Assistant
+                    </button>
+                    <button class="nav-tab px-4 py-1.5 rounded-full text-sm font-medium text-on-surface-variant hover:text-on-surface hover:bg-surface-container/60 transition-all" data-tab="live-call">
+                        Live Call & Phone
+                    </button>
+                    <button class="nav-tab px-4 py-1.5 rounded-full text-sm font-medium text-on-surface-variant hover:text-on-surface hover:bg-surface-container/60 transition-all" data-tab="task-receipts">
+                        Task Receipts
+                    </button>
+                    <button class="nav-tab px-4 py-1.5 rounded-full text-sm font-medium text-on-surface-variant hover:text-on-surface hover:bg-surface-container/60 transition-all" data-tab="agent-settings">
+                        Agent Settings
+                    </button>
+                </nav>
+            </div>
+
+            <!-- Header Controls -->
+            <div class="flex items-center gap-3">
+                <div class="flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-low border border-tertiary/20">
+                    <span class="relative flex h-2 w-2">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-tertiary opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-tertiary shadow-[0_0_8px_#4fdbc8]"></span>
+                    </span>
+                    <span class="font-label-mono-sm text-xs text-tertiary-fixed tracking-wider uppercase" id="headerEngineStatus">Gemini 3.5 Ready</span>
+                </div>
+
+                <button id="directCallModalBtn" class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-semibold text-xs shadow-[0_0_16px_rgba(16,185,129,0.3)] hover:scale-105 transition-all">
+                    <span class="material-symbols-outlined text-sm">call</span>
+                    <span>Twilio Call</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Canvas -->
+    <main class="w-full pt-20 pb-16 flex-1 flex flex-col relative max-w-7xl mx-auto px-4 sm:px-6">
+
+        <!-- TAB 1: ONE-TOUCH AI ASSISTANT (Hero Standby Screen) -->
+        <section id="tab-assistant" class="tab-content flex flex-col w-full relative min-h-[calc(100vh-8rem)] justify-center items-center overflow-hidden select-none py-8">
+            <!-- Glowing Core Glow Orbs -->
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-primary-container/10 blur-[130px] pointer-events-none"></div>
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full bg-secondary-container/15 blur-[90px] pointer-events-none"></div>
+
+            <div class="relative z-10 w-full max-w-4xl mx-auto flex flex-col items-center text-center my-auto">
+                <!-- Status Badge -->
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface-container-low shadow-[0_4px_24px_rgba(0,0,0,0.6)] backdrop-blur-xl mb-6 border border-outline/10">
+                    <span class="relative flex h-2 w-2">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-tertiary opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-tertiary shadow-[0_0_10px_#4fdbc8]"></span>
+                    </span>
+                    <span class="font-label-mono-sm text-xs text-tertiary-fixed tracking-widest uppercase" id="heroEngineBadge">Vocalis Core // Ready</span>
+                    <span class="w-1 h-1 rounded-full bg-surface-container-highest"></span>
+                    <span class="font-label-mono-sm text-xs text-outline tracking-wider" id="heroLatencyBadge">Sub-Second Latency</span>
+                </div>
+
+                <!-- Glowing Audio Orb Mic Trigger -->
+                <div class="relative group cursor-pointer my-4" id="orbContainer">
+                    <div class="absolute -inset-10 rounded-full bg-gradient-to-tr from-primary/20 via-tertiary/10 to-secondary/20 blur-2xl opacity-60 group-hover:opacity-100 transition-opacity duration-700 animate-pulse"></div>
+                    
+                    <div class="relative w-56 h-56 sm:w-64 sm:h-64 rounded-full p-2 bg-surface-container-lowest/40 backdrop-blur-2xl shadow-[0_0_60px_rgba(6,182,212,0.25)] flex items-center justify-center transition-transform duration-500 group-hover:scale-105 border border-primary/20">
+                        <!-- Canvas Waveform Ring -->
+                        <canvas id="heroVisualizer" width="240" height="240" class="absolute inset-0 w-full h-full rounded-full pointer-events-none"></canvas>
+                        
+                        <div class="w-40 h-40 rounded-full bg-gradient-to-tr from-primary-container/40 to-secondary-container/40 flex items-center justify-center shadow-[inset_0_0_30px_rgba(0,0,0,0.8)] border border-primary/30 group-hover:border-primary transition-all">
+                            <span class="material-symbols-outlined text-primary text-6xl drop-shadow-[0_0_20px_rgba(76,215,246,0.8)] group-hover:scale-110 transition-transform">mic</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Hero Headings -->
+                <div class="mt-6 mb-6 max-w-xl">
+                    <h1 class="font-display-hero text-3xl sm:text-4xl md:text-5xl text-on-surface tracking-tight font-bold" id="heroStatusHeading">
+                        Vocalis AI is standing by
+                    </h1>
+                    <p class="font-body-lg text-base sm:text-lg text-on-surface-variant mt-2 font-normal" id="heroStatusSubtext">
+                        Tap microphone or select a directive to assign complex operations.
+                    </p>
+                </div>
+
+                <!-- CTA Action Button -->
+                <div class="flex flex-col items-center gap-3 w-full max-w-xs">
+                    <button class="group relative w-full h-14 rounded-full bg-gradient-to-r from-primary-container via-primary to-tertiary-container shadow-[0_0_32px_rgba(6,182,212,0.45)] hover:shadow-[0_0_48px_rgba(6,182,212,0.7)] active:scale-95 transition-all duration-300 flex items-center justify-center gap-3 px-6" id="startCallBtn">
+                        <span class="material-symbols-outlined text-on-primary-container font-semibold transition-transform duration-300 group-hover:scale-110">mic</span>
+                        <span class="font-headline-sm text-base text-on-primary-container font-bold tracking-tight" id="startBtnLabel">Start Call & Speak</span>
+                    </button>
+
+                    <div class="flex items-center justify-center gap-3 w-full pt-1">
+                        <button class="flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-surface-container-low/70 hover:bg-surface-container text-on-surface-variant hover:text-on-surface transition-all font-label-mono-sm text-xs" id="textInputToggleBtn">
+                            <span class="material-symbols-outlined text-sm">keyboard</span>
+                            <span>Text Input</span>
+                        </button>
+                        <button class="flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-surface-container-low/70 hover:bg-surface-container text-on-surface-variant hover:text-on-surface transition-all font-label-mono-sm text-xs" id="muteAudioBtn">
+                            <span class="material-symbols-outlined text-sm">volume_up</span>
+                            <span id="muteBtnLabel">Mute Audio</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Live Text Input Drawer (Collapsible) -->
+                <div id="textInputRow" class="w-full max-w-xl mt-4 hidden">
+                    <div class="flex gap-2">
+                        <input type="text" id="textInput" placeholder="Type instruction for AI agent..." autocomplete="off" class="flex-1 bg-surface-container border border-outline/20 text-on-surface px-4 py-2.5 rounded-xl outline-none focus:border-primary font-body-md">
+                        <button id="sendBtn" class="px-5 py-2.5 rounded-xl bg-primary text-on-primary font-semibold hover:bg-primary-container transition-all flex items-center gap-2">
+                            <span>Send</span>
+                            <span class="material-symbols-outlined text-sm">send</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Suggested Directives / Quick Prompts -->
+                <div class="w-full mt-10 pt-4 flex flex-col items-center">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="w-1.5 h-1.5 rounded-full bg-primary/40"></span>
+                        <span class="font-label-mono-sm text-xs text-outline uppercase tracking-wider">Suggested Autonomous Directives</span>
+                        <span class="w-1.5 h-1.5 rounded-full bg-primary/40"></span>
+                    </div>
+                    <div class="flex flex-wrap items-center justify-center gap-2 max-w-2xl">
+                        <button class="directive-pill px-4 py-2 rounded-full bg-surface-container/60 hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface border border-outline/10 shadow-[0_2px_12px_rgba(0,0,0,0.3)] transition-all font-body-sm text-xs flex items-center gap-2 group" data-prompt="What is the system status?">
+                            <span class="material-symbols-outlined text-sm text-primary opacity-70 group-hover:opacity-100">computer</span>
+                            <span>“Check System Status”</span>
+                        </button>
+                        <button class="directive-pill px-4 py-2 rounded-full bg-surface-container/60 hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface border border-outline/10 shadow-[0_2px_12px_rgba(0,0,0,0.3)] transition-all font-body-sm text-xs flex items-center gap-2 group" data-prompt="What time is it right now?">
+                            <span class="material-symbols-outlined text-sm text-tertiary opacity-70 group-hover:opacity-100">schedule</span>
+                            <span>“Get Current Time”</span>
+                        </button>
+                        <button class="directive-pill px-4 py-2 rounded-full bg-surface-container/60 hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface border border-outline/10 shadow-[0_2px_12px_rgba(0,0,0,0.3)] transition-all font-body-sm text-xs flex items-center gap-2 group" data-prompt="List files in sandbox">
+                            <span class="material-symbols-outlined text-sm text-secondary opacity-70 group-hover:opacity-100">folder_open</span>
+                            <span>“List Sandbox Files”</span>
+                        </button>
+                        <button class="directive-pill px-4 py-2 rounded-full bg-surface-container/60 hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface border border-outline/10 shadow-[0_2px_12px_rgba(0,0,0,0.3)] transition-all font-body-sm text-xs flex items-center gap-2 group" data-prompt="Check docker containers">
+                            <span class="material-symbols-outlined text-sm text-primary opacity-70 group-hover:opacity-100">view_in_ar</span>
+                            <span>“Check Docker PS”</span>
+                        </button>
+                        <button class="directive-pill px-4 py-2 rounded-full bg-surface-container/60 hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface border border-outline/10 shadow-[0_2px_12px_rgba(0,0,0,0.3)] transition-all font-body-sm text-xs flex items-center gap-2 group" data-prompt="Check git status">
+                            <span class="material-symbols-outlined text-sm text-tertiary opacity-70 group-hover:opacity-100">account_tree</span>
+                            <span>“Check Git Status”</span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- TAB 2: LIVE CALL & PHONE DIALER SCREEN -->
+        <section id="tab-live-call" class="tab-content hidden flex-col w-full gap-6 py-6">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Left: Live Call Feed & Speech Output -->
+                <div class="lg:col-span-2 flex flex-col gap-6">
+                    <div class="glass-panel p-6 rounded-2xl flex flex-col gap-4">
+                        <div class="flex justify-between items-center border-b border-outline/10 pb-4">
+                            <div class="flex items-center gap-3">
+                                <span class="material-symbols-outlined text-primary text-2xl">graphic_eq</span>
+                                <div>
+                                    <h2 class="font-headline-sm text-lg font-semibold">Active Speech Stream</h2>
+                                    <span class="text-xs text-on-surface-variant">Real-time Web Speech & Voice Synthesis</span>
+                                </div>
+                            </div>
+                            <span class="px-3 py-1 rounded-full text-xs font-mono bg-primary-container/20 text-primary border border-primary/30" id="liveCallStatus">Standby</span>
+                        </div>
+
+                        <!-- Live Transcript Stream Box -->
+                        <div class="bg-surface-container-lowest/80 border border-outline/10 p-4 rounded-xl min-h-[100px] flex flex-col justify-between">
+                            <span class="font-label-mono-sm text-xs text-outline uppercase tracking-wider">User Voice Input Stream</span>
+                            <div class="text-base font-body-md text-on-surface mt-2" id="transcript">Listening for speech...</div>
+                        </div>
+
+                        <!-- AI Response Stream Box -->
+                        <div class="bg-surface-container/60 border border-outline/15 p-4 rounded-xl min-h-[140px] flex flex-col gap-2">
+                            <div class="flex justify-between items-center">
+                                <span class="font-label-mono-sm text-xs text-tertiary uppercase tracking-wider">Gemini Agent Response</span>
+                                <button id="speakAgainBtn" class="text-xs text-primary hover:underline flex items-center gap-1">
+                                    <span class="material-symbols-outlined text-sm">volume_up</span>
+                                    <span>Replay Audio</span>
+                                </button>
+                            </div>
+                            <div class="text-lg font-headline-sm text-on-surface leading-relaxed mt-1" id="latestReply">
+                                Click the microphone button to start a live voice interaction session.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Twilio Telephony Setup Panel -->
+                <div class="glass-panel p-6 rounded-2xl flex flex-col gap-5">
+                    <div class="flex items-center gap-3 border-b border-outline/10 pb-4">
+                        <span class="material-symbols-outlined text-emerald-400 text-2xl">phone_in_talk</span>
+                        <div>
+                            <h2 class="font-headline-sm text-lg font-semibold">Twilio Telephony Center</h2>
+                            <span class="text-xs text-on-surface-variant">Phone Call Webhooks & Dialer</span>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <label class="text-xs font-label-mono-sm text-outline uppercase">Twilio Voice Webhook URL:</label>
+                        <div class="flex gap-2">
+                            <input type="text" id="webhookUrlInput" readonly value="http://localhost:8000/twilio/voice" class="flex-1 bg-surface-container border border-outline/20 font-mono text-xs text-primary px-3 py-2 rounded-lg outline-none">
+                            <button id="copyWebhookBtn" class="px-3 py-2 rounded-lg bg-surface-container-high hover:bg-surface-bright text-xs font-semibold">Copy</button>
+                        </div>
+                    </div>
+
+                    <div class="border-t border-outline/10 pt-4 flex flex-col gap-3">
+                        <h3 class="text-sm font-semibold">Simulate Phone Call Connection</h3>
+                        <div class="flex gap-2">
+                            <input type="tel" id="simulatedPhoneInput" placeholder="+1 (555) 019-2834" class="flex-1 bg-surface-container border border-outline/20 text-xs px-3 py-2 rounded-lg outline-none">
+                            <button id="startSimulatedCallBtn" class="px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs flex items-center gap-1">
+                                <span class="material-symbols-outlined text-sm">call</span>
+                                <span>Dial</span>
+                            </button>
+                        </div>
+                        <div id="simulatedCallLog" class="bg-surface-container-lowest border border-outline/10 p-3 rounded-lg font-mono text-xs max-h-32 overflow-y-auto text-on-surface-variant">
+                            <span class="block opacity-60">Ready to simulate incoming Twilio phone session...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: TASK RECEIPTS & WORK DONE SCREEN -->
+        <section id="tab-task-receipts" class="tab-content hidden flex-col w-full gap-6 py-6">
+            <div class="glass-panel p-6 rounded-2xl flex flex-col gap-5">
+                <div class="flex justify-between items-center border-b border-outline/10 pb-4">
+                    <div class="flex items-center gap-3">
+                        <span class="material-symbols-outlined text-tertiary text-2xl">terminal</span>
+                        <div>
+                            <h2 class="font-headline-sm text-lg font-semibold">Task Receipts & Tool Logs</h2>
+                            <span class="text-xs text-on-surface-variant">Audited execution trail of allowlisted commands</span>
+                        </div>
+                    </div>
+                    <span class="px-3 py-1 rounded-full text-xs font-mono bg-tertiary-container/20 text-tertiary border border-tertiary/30" id="consoleStatus">Idle</span>
+                </div>
+
+                <!-- Terminal Execution Console -->
+                <div class="bg-surface-container-lowest border border-outline/15 rounded-xl p-4 font-mono text-xs min-h-[160px] max-h-60 overflow-y-auto" id="toolExecutionBody">
+                    <div class="text-outline">
+                        <code>No tools executed yet. Ask for time, system status, docker, or files to trigger tool execution.</code>
+                    </div>
+                </div>
+
+                <!-- Dialogue History Trail -->
+                <div class="flex flex-col gap-3 mt-4">
+                    <div class="flex justify-between items-center">
+                        <h3 class="font-headline-sm text-sm font-semibold">Conversation History Log</h3>
+                        <button id="clearHistoryBtn" class="text-xs text-error hover:underline flex items-center gap-1">
+                            <span class="material-symbols-outlined text-xs">delete</span>
+                            <span>Clear Session</span>
+                        </button>
+                    </div>
+                    <div class="flex flex-col gap-2 max-h-64 overflow-y-auto pr-1" id="historyList">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 4: AGENT SETTINGS & PREFERENCES -->
+        <section id="tab-agent-settings" class="tab-content hidden flex-col w-full gap-6 py-6">
+            <div class="glass-panel p-6 rounded-2xl flex flex-col gap-6 max-w-3xl mx-auto w-full">
+                <div class="flex items-center gap-3 border-b border-outline/10 pb-4">
+                    <span class="material-symbols-outlined text-secondary text-2xl">settings</span>
+                    <div>
+                        <h2 class="font-headline-sm text-lg font-semibold">Agent Preferences & Telephony</h2>
+                        <span class="text-xs text-on-surface-variant">Speech synthesis, model selection, and API configuration</span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <!-- Language Picker -->
+                    <div class="flex flex-col gap-2">
+                        <label class="text-xs font-label-mono-sm text-outline uppercase">Recognition Language:</label>
+                        <select id="langSelect" class="bg-surface-container border border-outline/20 text-on-surface px-4 py-2.5 rounded-xl outline-none text-sm font-body-md">
+                            <option value="en-IN" selected>🇮🇳 English (India)</option>
+                            <option value="en-US">🇺🇸 English (US)</option>
+                            <option value="hi-IN">🇮🇳 Hindi (हिन्दी)</option>
+                        </select>
+                    </div>
+
+                    <!-- Voice Picker -->
+                    <div class="flex flex-col gap-2">
+                        <label class="text-xs font-label-mono-sm text-outline uppercase">Text-to-Speech Voice:</label>
+                        <select id="voiceSelect" class="bg-surface-container border border-outline/20 text-on-surface px-4 py-2.5 rounded-xl outline-none text-sm font-body-md">
+                            <option value="">🔊 Loading System Voices...</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="border-t border-outline/10 pt-4 flex flex-col gap-4">
+                    <h3 class="text-sm font-semibold">AI Intelligence Service</h3>
+                    <div class="bg-surface-container/60 p-4 rounded-xl border border-outline/10 flex flex-col gap-2 text-xs">
+                        <div class="flex justify-between">
+                            <span class="text-outline">Active LLM Model:</span>
+                            <span class="font-mono text-primary">Google Gemini 3.5 Flash</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-outline">Function Calling:</span>
+                            <span class="font-mono text-tertiary">Automatic (AFC)</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-outline">Safety Engine:</span>
+                            <span class="font-mono text-secondary">Allowlisted Sandbox Only</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- LIVE WEBRTC CALL OVERLAY -->
+    <div class="fixed inset-0 z-50 bg-surface-container-lowest/92 backdrop-blur-2xl opacity-0 pointer-events-none transition-opacity duration-500 flex flex-col items-center justify-center p-6" id="callOverlay">
+        <div class="w-24 h-24 rounded-full bg-primary-container/20 border border-primary/40 flex items-center justify-center mb-6 shadow-[0_0_50px_rgba(6,182,212,0.4)] animate-pulse">
+            <span class="material-symbols-outlined text-primary text-5xl">graphic_eq</span>
+        </div>
+        <div class="font-headline-md text-2xl text-on-surface font-semibold mb-1" id="overlayTitle">Listening via Speech API...</div>
+        <div class="font-label-mono-sm text-xs text-tertiary-fixed mb-8 uppercase tracking-widest" id="overlaySub">LIVE OPUS STREAM • 48,000 HZ</div>
+        
+        <!-- Live Equalizer Animation -->
+        <div class="flex items-center gap-2 h-12 w-64 justify-center mb-10">
+            <span class="w-1.5 bg-primary rounded-full animate-[bounce_1s_infinite_100ms] h-8"></span>
+            <span class="w-1.5 bg-primary rounded-full animate-[bounce_1s_infinite_250ms] h-12"></span>
+            <span class="w-1.5 bg-primary rounded-full animate-[bounce_1s_infinite_400ms] h-6"></span>
+            <span class="w-1.5 bg-tertiary rounded-full animate-[bounce_1s_infinite_150ms] h-10"></span>
+            <span class="w-1.5 bg-tertiary rounded-full animate-[bounce_1s_infinite_300ms] h-14"></span>
+            <span class="w-1.5 bg-primary rounded-full animate-[bounce_1s_infinite_200ms] h-7"></span>
+        </div>
+
+        <button class="px-8 py-3 rounded-full bg-error-container hover:bg-error/30 text-error border border-error/40 shadow-[0_0_24px_rgba(147,0,10,0.5)] transition-all font-body-md font-semibold flex items-center gap-2" id="endCallBtn">
+            <span class="material-symbols-outlined">call_end</span>
+            <span>End Live Session</span>
+        </button>
+    </div>
+
+    <!-- Sticky Footer -->
+    <footer class="w-full bg-surface-container-lowest/80 backdrop-blur-md py-4 border-t border-outline/10">
+        <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-on-surface-variant font-label-mono-sm text-xs">
+            <div>
+                <span>© 2025 Vocalis.ai Autonomous Voice Intelligence</span>
+            </div>
+            <div class="flex items-center gap-6">
+                <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_6px_#4cd7f6]"></span> WebRTC Standby</span>
+                <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-tertiary shadow-[0_0_6px_#4fdbc8]"></span> 48kHz Opus</span>
+                <span class="text-outline">Latency: &lt;120ms</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>

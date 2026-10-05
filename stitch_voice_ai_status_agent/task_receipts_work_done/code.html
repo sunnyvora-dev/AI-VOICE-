@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "surface-container-highest": "#313540", "surface-container-lowest": "#0a0e18", "on-secondary-container": "#b0b2ff", "on-tertiary-fixed": "#00201c", "surface": "#0f131d", "primary-container": "#06b6d4", "inverse-primary": "#00687a", "tertiary-fixed-dim": "#4fdbc8", "background": "#0f131d", "on-secondary": "#1000a9", "surface-dim": "#0f131d", "tertiary": "#4fdbc8", "on-secondary-fixed-variant": "#2f2ebe", "on-tertiary": "#003731", "tertiary-container": "#1abaa8", "error": "#ffb4ab", "on-primary-fixed": "#001f26", "on-surface": "#dfe2f1", "on-error-container": "#ffdad6", "outline": "#869397", "on-background": "#dfe2f1", "on-secondary-fixed": "#07006c", "surface-variant": "#313540", "primary-fixed-dim": "#4cd7f6", "surface-container-low": "#171b26", "on-error": "#690005", "on-primary-fixed-variant": "#004e5c", "primary": "#4cd7f6", "outline-variant": "#3d494c", "error-container": "#93000a", "surface-container-high": "#262a35", "tertiary-fixed": "#71f8e4", "on-tertiary-fixed-variant": "#005048", "surface-tint": "#4cd7f6", "secondary": "#c0c1ff", "surface-bright": "#353944", "surface-container": "#1c1f2a", "secondary-fixed": "#e1e0ff", "secondary-fixed-dim": "#c0c1ff", "primary-fixed": "#acedff", "on-surface-variant": "#bcc9cd", "on-tertiary-container": "#00443c", "inverse-on-surface": "#2c303b", "on-primary-container": "#00424f", "inverse-surface": "#dfe2f1", "secondary-container": "#3131c0", "on-primary": "#003640" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-xl": "2rem", "space-md": "1rem", "gutter": "1.5rem", "margin": "2rem", "margin-mobile": "1rem", "space-lg": "1.5rem", "gutter-mobile": "0.75rem", "space-xs": "0.25rem", "space-sm": "0.5rem" }, "fontFamily": { "label-mono-lg": [ "JetBrains Mono" ], "body-lg": [ "Inter" ], "headline-md": [ "Plus Jakarta Sans" ], "display-hero-mobile": [ "Plus Jakarta Sans" ], "badge-status": [ "Plus Jakarta Sans" ], "headline-lg-mobile": [ "Plus Jakarta Sans" ], "headline-lg": [ "Plus Jakarta Sans" ], "body-sm": [ "Inter" ], "headline-sm": [ "Plus Jakarta Sans" ], "body-md": [ "Inter" ], "label-mono-sm": [ "JetBrains Mono" ], "display-hero": [ "Plus Jakarta Sans" ] }, "fontSize": { "label-mono-lg": [ "13px", { "lineHeight": "18px", "letterSpacing": "0.02em", "fontWeight": "500" } ], "body-lg": [ "16px", { "lineHeight": "26px", "letterSpacing": "-0.005em", "fontWeight": "400" } ], "headline-md": [ "24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "600" } ], "display-hero-mobile": [ "32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" } ], "badge-status": [ "11px", { "lineHeight": "14px", "letterSpacing": "0.06em", "fontWeight": "700" } ], "headline-lg-mobile": [ "24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "600" } ], "headline-lg": [ "32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600" } ], "body-sm": [ "12px", { "lineHeight": "18px", "letterSpacing": "0.005em", "fontWeight": "400" } ], "headline-sm": [ "18px", { "lineHeight": "26px", "letterSpacing": "-0.01em", "fontWeight": "600" } ], "body-md": [ "14px", { "lineHeight": "22px", "letterSpacing": "0em", "fontWeight": "400" } ], "label-mono-sm": [ "11px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500" } ], "display-hero": [ "48px", { "lineHeight": "56px", "letterSpacing": "-0.03em", "fontWeight": "700" } ] } } } };</script></head><body class="bg-surface-container-lowest font-body-md text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container min-h-screen flex flex-col justify-between relative" style='background-image: radial-gradient(circle at 50% 0%, rgba(6, 182, 212, 0.08) 0%, rgba(15, 19, 29, 0) 65%), linear-gradient(rgba(10, 14, 24, 0.94), rgba(15, 19, 29, 0.96)), url("https://lh3.googleusercontent.com/aida-public/AB6AXuCFCvLm2Td67F1G0YVrzBK7SLVk41ywjc_-F1E4Oq4X4e8GJREpU9H_ANQswJHzZQi3ggyKF5txfak4ucS4_-gFSIB3FPVVvr-yvDrB7UdCSUd3kOmOMGeZBGHjvfGEh3TZ35qtDDqVD_HObUNNh4RHPksOaZnUuaSgTSsZKWcLYi1s6KGn8z-Zmy5Q2GT_b1QFrTrdjL_UipCvnAewzG1nHmhnZ1Md2F3BsDzP82BF-LZp-kxEWIY"); background-size: cover; background-position: center top; background-repeat: no-repeat; background-attachment: fixed;'><header class="fixed top-0 left-0 right-0 w-full z-50 bg-surface-container-lowest/80 backdrop-blur-2xl shadow-[0_1px_16px_rgba(0,0,0,0.4)]"><div class="h-16 w-full px-margin-mobile md:px-margin flex items-center justify-between"><div class="flex items-center gap-space-lg"><div class="flex items-center gap-space-sm"><img alt="Vocalis.ai Logo" class="h-7 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1WloYej_rqh-p2PQLb8r9tZYNDZsZA-f-I5HDaQ9rkn_0bMk7QSYHzxmSAPQWoX5lwSEiTJIJFJdzjBzfX0TUPugFtP2MRVy328sBeAmCUKwPQzVwT9bA5eQ4EZx7O7IY9ydzkGqU2nyXvNjGqrLc5bsEw0NwnLy300vMb1_ygwQ_jiFyXoTj9YToQTFxzizQyxjSqWm7zScC-6KBZEpWMjbY3TZskb8fFUPnRtiGLfp-6sE71psHvU"/><span class="font-headline-sm text-headline-sm text-on-surface tracking-tight font-semibold hidden sm:inline-block">Vocalis.ai</span></div><div class="h-3.5 w-px bg-surface-variant/40 hidden md:block"></div><nav class="hidden md:flex items-center gap-space-xs" data-active-classes="bg-surface-container text-on-surface font-semibold shadow-[inset_0_0_12px_rgba(6,182,212,0.1)]"><a class="px-space-md py-space-xs rounded-full text-on-surface-variant hover:text-on-surface hover:bg-surface-container/60 transition-all font-body-sm text-body-sm" data-path="assistant" href="#">Assistant</a><a class="px-space-md py-space-xs rounded-full text-on-surface-variant hover:text-on-surface hover:bg-surface-container/60 transition-all font-body-sm text-body-sm" data-path="live-call" href="#">Live Call</a><a aria-current="page" class="px-space-md py-space-xs rounded-full transition-all bg-surface-container text-on-surface font-semibold shadow-[inset_0_0_12px_rgba(6,182,212,0.1)]" data-path="task-receipts" href="#">Task Receipts</a><a class="px-space-md py-space-xs rounded-full text-on-surface-variant hover:text-on-surface hover:bg-surface-container/60 transition-all font-body-sm text-body-sm" data-path="agent-settings" href="#">Agent Settings</a></nav></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-sm px-space-md py-1 rounded-full bg-surface-container-low shadow-[inset_0_0_0_1px_rgba(79,219,200,0.18)]"><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-tertiary opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-tertiary shadow-[0_0_8px_#4fdbc8]"></span></span><span class="font-label-mono-sm text-label-mono-sm text-tertiary-fixed tracking-wider uppercase hidden xs:inline">Voice Agent Ready</span></div><div class="flex items-center pl-space-xs"><img alt="User Avatar" class="w-8 h-8 rounded-full object-cover ring-1 ring-surface-container-highest shadow-[0_0_12px_rgba(0,0,0,0.5)]" src="https://lh3.googleusercontent.com/aida/AEtjO1UDq6HdrG-s72jVg26XuvzLiDYhRuMxfFegsLnBY67xpEFXRPkny7e4g4lsh8cK3uiTDeK8lElB2WqtOPa3tk2ahEnSlnkFxZ4O86KI_RwbHSzoDxbA3Tuu9p9OYUqRGtjS2E4pwCqW4bQFrbhhHmWbmzjFFK7dQoDdYheJGA6jwPJHcWNPKbEU0sFkKNXrc6808igMpnl9PyA6YFog2SZksbVtqrAQInQTIiVdsDpWoKhRWy-7Jox8Og"/></div></div></div></header><main class="w-full pt-16 flex-1 flex flex-col relative"><div class="flex flex-col w-full">
+<div class="w-full relative px-margin-mobile md:px-margin py-space-xl max-w-7xl mx-auto flex flex-col gap-space-xl">
+<div class="absolute -top-16 left-1/2 -translate-x-1/2 w-full max-w-5xl h-96 pointer-events-none opacity-30 blur-3xl -z-10 overflow-hidden">
+<div class="w-full h-full bg-gradient-to-r from-primary-container via-secondary to-tertiary rounded-full"></div>
+</div>
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md">
+<div class="flex flex-col gap-space-xs max-w-2xl">
+<div class="flex items-center gap-space-sm text-tertiary font-label-mono-sm text-label-mono-sm tracking-wider uppercase">
+<span class="inline-block w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_#4fdbc8]"></span>
+<span>Deterministic Audit Ledger</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight font-bold">
+          Execution Receipts &amp; Work Done
+        </h1>
+<p class="font-body-md text-body-md text-on-surface-variant">
+          Verifiable records of automated actions executed during voice calls.
+        </p>
+</div>
+<div class="flex items-center gap-space-sm">
+<div class="relative flex items-center">
+<input class="bg-surface-container-low text-on-surface placeholder:text-outline text-body-sm font-body-sm px-space-md py-2.5 pl-9 rounded-xl focus:outline-none focus:bg-surface-container shadow-inner w-64 md:w-72 transition-colors" id="searchReceipts" placeholder="Search tasks, agents, tools..." type="text"/>
+<span class="material-symbols-outlined absolute left-2.5 text-outline text-[18px] pointer-events-none">search</span>
+</div>
+<button class="flex items-center gap-space-xs bg-surface-container-high hover:bg-surface-bright text-on-surface px-space-md py-2.5 rounded-xl font-label-mono-sm text-label-mono-sm shadow-md transition-all active:scale-[0.98]" id="exportBatchBtn">
+<span class="material-symbols-outlined text-[16px] text-primary">download</span>
+<span>Export Audit</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md">
+<div class="relative bg-surface-container/70 backdrop-blur-xl p-space-md rounded-xl shadow-lg flex flex-col justify-between overflow-hidden">
+<div class="flex items-center justify-between text-on-surface-variant font-label-mono-sm text-label-mono-sm">
+<span>TASKS EXECUTED TODAY</span>
+<span class="material-symbols-outlined text-primary text-[20px]">task_alt</span>
+</div>
+<div class="mt-space-md flex items-baseline gap-space-xs">
+<span class="font-headline-lg text-headline-lg font-bold text-on-surface">38</span>
+<span class="text-tertiary font-label-mono-sm text-label-mono-sm font-semibold">+14.2%</span>
+</div>
+<div class="mt-space-xs text-on-surface-variant font-body-sm text-body-sm">
+          Zero unhandled failures recorded
+        </div>
+<div class="absolute -right-6 -bottom-6 w-24 h-24 bg-primary/10 rounded-full blur-xl pointer-events-none"></div>
+</div>
+<div class="relative bg-surface-container/70 backdrop-blur-xl p-space-md rounded-xl shadow-lg flex flex-col justify-between overflow-hidden">
+<div class="flex items-center justify-between text-on-surface-variant font-label-mono-sm text-label-mono-sm">
+<span>DETERMINISTIC ACCURACY</span>
+<span class="material-symbols-outlined text-tertiary text-[20px]">verified</span>
+</div>
+<div class="mt-space-md flex items-baseline gap-space-xs">
+<span class="font-headline-lg text-headline-lg font-bold text-on-surface">99.4%</span>
+<span class="text-on-surface-variant font-label-mono-sm text-label-mono-sm">target &gt;98%</span>
+</div>
+<div class="mt-space-xs text-on-surface-variant font-body-sm text-body-sm">
+          Cryptographically confirmed payloads
+        </div>
+<div class="absolute -right-6 -bottom-6 w-24 h-24 bg-tertiary/10 rounded-full blur-xl pointer-events-none"></div>
+</div>
+<div class="relative bg-surface-container/70 backdrop-blur-xl p-space-md rounded-xl shadow-lg flex flex-col justify-between overflow-hidden">
+<div class="flex items-center justify-between text-on-surface-variant font-label-mono-sm text-label-mono-sm">
+<span>AVG RESOLUTION SPEED</span>
+<span class="material-symbols-outlined text-secondary text-[20px]">timer</span>
+</div>
+<div class="mt-space-md flex items-baseline gap-space-xs">
+<span class="font-headline-lg text-headline-lg font-bold text-on-surface">42s</span>
+<span class="text-secondary font-label-mono-sm text-label-mono-sm">-6s vs last week</span>
+</div>
+<div class="mt-space-xs text-on-surface-variant font-body-sm text-body-sm">
+          Across full telephony pipeline
+        </div>
+<div class="absolute -right-6 -bottom-6 w-24 h-24 bg-secondary/10 rounded-full blur-xl pointer-events-none"></div>
+</div>
+<div class="relative bg-surface-container/70 backdrop-blur-xl p-space-md rounded-xl shadow-lg flex flex-col justify-between overflow-hidden">
+<div class="flex items-center justify-between text-on-surface-variant font-label-mono-sm text-label-mono-sm">
+<span>TOOL ARTIFACTS STORED</span>
+<span class="material-symbols-outlined text-outline text-[20px]">inventory_2</span>
+</div>
+<div class="mt-space-md flex items-baseline gap-space-xs">
+<span class="font-headline-lg text-headline-lg font-bold text-on-surface">114</span>
+<span class="text-outline font-label-mono-sm text-label-mono-sm">JSON + Audio</span>
+</div>
+<div class="mt-space-xs text-on-surface-variant font-body-sm text-body-sm">
+          All receipts backed up to S3 bucket
+        </div>
+<div class="absolute -right-6 -bottom-6 w-24 h-24 bg-surface-bright/20 rounded-full blur-xl pointer-events-none"></div>
+</div>
+</div>
+<div class="flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="font-headline-sm text-headline-sm font-semibold text-on-surface">Recent Voice Tasks</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-high text-primary font-label-mono-sm text-label-mono-sm">4 Active Feeds</span>
+</div>
+<div class="flex items-center gap-space-xs text-on-surface-variant font-label-mono-sm text-label-mono-sm">
+<span>Auto-refresh:</span>
+<span class="text-tertiary flex items-center gap-1 font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span> Live
+          </span>
+</div>
+</div>
+<div class="grid grid-cols-1 gap-space-md" id="taskCardsContainer">
+<div class="receipt-card group bg-surface-container/75 backdrop-blur-xl p-space-lg rounded-xl shadow-xl flex flex-col gap-space-md transition-all hover:bg-surface-container duration-200" data-task-id="VOC-7721">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-sm pb-space-sm bg-surface-container-lowest/30 p-space-sm rounded-lg">
+<div class="flex flex-wrap items-center gap-space-sm">
+<span class="font-label-mono-sm text-label-mono-sm text-outline px-2 py-1 bg-surface-container-lowest rounded-md">ID: VOC-7721</span>
+<h2 class="font-headline-sm text-headline-sm font-bold text-on-surface tracking-tight">Flight Reschedule — DL-402</h2>
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-tertiary-container/20 text-tertiary font-label-mono-sm text-label-mono-sm font-semibold shadow-sm">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+                Completed &amp; Verified
+              </span>
+</div>
+<div class="flex items-center gap-space-md text-on-surface-variant font-label-mono-sm text-label-mono-sm">
+<span class="flex items-center gap-1 text-primary">
+<span class="material-symbols-outlined text-[15px]">record_voice_over</span> Agent Nova
+              </span>
+<span class="text-outline">•</span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px]">schedule</span> 2 mins ago
+              </span>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-md items-start">
+<div class="lg:col-span-8 flex flex-col gap-space-xs">
+<span class="font-label-mono-sm text-label-mono-sm text-on-surface-variant uppercase tracking-wider">Executed Action &amp; Summary</span>
+<div class="p-space-md rounded-xl bg-surface-container-lowest/70 text-on-surface font-body-md text-body-md flex items-start gap-space-sm shadow-inner">
+<span class="material-symbols-outlined text-primary text-[20px] mt-0.5 shrink-0">flight_takeoff</span>
+<div class="flex flex-col gap-1 leading-relaxed">
+<p class="font-semibold text-on-surface">Seat 12C booked for 9:15 AM departure. Waived fee. SMS sent to +1 (415) 890-2134.</p>
+<p class="text-on-surface-variant font-body-sm text-body-sm">Amadeus API transaction auth token #TX-90214-DL confirmed with zero penalty surcharge applied under Platinum status waiver rule #9.</p>
+</div>
+</div>
+</div>
+<div class="lg:col-span-4 flex flex-col gap-space-xs">
+<span class="font-label-mono-sm text-label-mono-sm text-on-surface-variant uppercase tracking-wider">Acoustic Audio Context</span>
+<div class="p-space-sm rounded-xl bg-surface-container-lowest/70 flex flex-col gap-space-xs shadow-inner">
+<div class="flex items-center justify-between text-label-mono-sm font-label-mono-sm text-outline px-1">
+<span>Call Segment (02:14 - 02:46)</span>
+<span class="text-primary font-semibold">32s</span>
+</div>
+<div class="h-9 w-full bg-surface-container-high rounded-lg flex items-center justify-between px-2 gap-0.5">
+<div class="w-1 bg-primary h-2 rounded-full"></div>
+<div class="w-1 bg-primary h-5 rounded-full"></div>
+<div class="w-1 bg-primary h-7 rounded-full"></div>
+<div class="w-1 bg-primary h-4 rounded-full"></div>
+<div class="w-1 bg-primary h-6 rounded-full"></div>
+<div class="w-1 bg-primary h-8 rounded-full"></div>
+<div class="w-1 bg-primary h-3 rounded-full"></div>
+<div class="w-1 bg-primary h-5 rounded-full"></div>
+<div class="w-1 bg-primary h-7 rounded-full"></div>
+<div class="w-1 bg-primary h-4 rounded-full"></div>
+<div class="w-1 bg-primary h-2 rounded-full"></div>
+<div class="w-1 bg-primary h-6 rounded-full"></div>
+<div class="w-1 bg-primary h-8 rounded-full"></div>
+<div class="w-1 bg-primary h-5 rounded-full"></div>
+<div class="w-1 bg-primary h-3 rounded-full"></div>
+<div class="w-1 bg-primary h-7 rounded-full"></div>
+<div class="w-1 bg-primary h-4 rounded-full"></div>
+<div class="w-1 bg-primary h-2 rounded-full"></div>
+<div class="w-1 bg-primary h-5 rounded-full"></div>
+<div class="w-1 bg-primary h-8 rounded-full"></div>
+<div class="w-1 bg-primary h-6 rounded-full"></div>
+<div class="w-1 bg-primary h-3 rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="flex flex-wrap items-center justify-between gap-space-sm pt-space-xs">
+<div class="flex flex-wrap items-center gap-space-xs text-on-surface-variant font-label-mono-sm text-label-mono-sm">
+<span class="bg-surface-container-high px-2 py-1 rounded-md text-on-surface">Carrier: Delta Air Lines</span>
+<span class="bg-surface-container-high px-2 py-1 rounded-md text-on-surface">Tool: amadeus.reschedule</span>
+<span class="bg-surface-container-high px-2 py-1 rounded-md text-on-surface">Confidence: 99.8%</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<button class="audio-play-btn flex items-center gap-1.5 px-space-md py-2 rounded-lg bg-surface-container-high hover:bg-surface-bright text-on-surface font-body-sm text-body-sm transition-all shadow-sm" data-audio="flight-sample">
+<span class="material-symbols-outlined text-[18px] text-primary">play_arrow</span>
+<span>View Audio Clip</span>
+</button>
+<button class="copy-json-btn flex items-center gap-1.5 px-space-md py-2 rounded-lg bg-surface-container-high hover:bg-surface-bright text-on-surface font-body-sm text-body-sm transition-all shadow-sm" data-payload='{"taskId":"VOC-7721","intent":"reschedule_flight","pnr":"DL-402","seat":"12C","departure":"09:15","feeWaived":true,"customerPhone":"+14158902134","status":"VERIFIED"}'>
+<span class="material-symbols-outlined text-[18px] text-outline">code</span>
+<span>Copy JSON</span>
+</button>
+<button class="toggle-details-btn p-2 rounded-lg bg-surface-container-high hover:bg-surface-bright text-on-surface-variant hover:text-on-surface transition-all" title="Expand raw verification ledger">
+<span class="material-symbols-outlined text-[20px] transition-transform duration-200">expand_more</span>
+</button>
+</div>
+</div>
+<div class="details-drawer hidden flex-col gap-space-sm bg-surface-container-lowest/90 p-space-md rounded-xl mt-space-xs shadow-inner">
+<div class="flex items-center justify-between text-outline font-label-mono-sm text-label-mono-sm">
+<span>RAW TOOL INVOCATION TELEMETRY</span>
+<span class="text-tertiary">Cryptographic Hash: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855</span>
+</div>
+<pre class="bg-surface-container-low p-space-sm rounded-lg text-primary font-label-mono-sm text-label-mono-sm overflow-x-auto leading-relaxed">{
+  "task_id": "VOC-7721",
+  "agent_id": "nova-telephony-v4",
+  "tool": "amadeus.reschedule_flight",
+  "parameters": {
+    "flight_pnr": "DL-402",
+    "requested_departure": "2025-10-24T09:15:00Z",
+    "seat_selection": "12C",
+    "fee_waiver_token": "PLATINUM-EXEMPT-09",
+    "dispatch_sms": true
+  },
+  "deterministic_verification": {
+    "carrier_code": "DL",
+    "booking_reference": "K92LPA",
+    "http_status": 200,
+    "latency_ms": 312
+  }
+}</pre>
+</div>
+</div>
+<div class="receipt-card group bg-surface-container/75 backdrop-blur-xl p-space-lg rounded-xl shadow-xl flex flex-col gap-space-md transition-all hover:bg-surface-container duration-200" data-task-id="VOC-7720">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-sm pb-space-sm bg-surface-container-lowest/30 p-space-sm rounded-lg">
+<div class="flex flex-wrap items-center gap-space-sm">
+<span class="font-label-mono-sm text-label-mono-sm text-outline px-2 py-1 bg-surface-container-lowest rounded-md">ID: VOC-7720</span>
+<h2 class="font-headline-sm text-headline-sm font-bold text-on-surface tracking-tight">Dental Appointment Booking</h2>
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-tertiary-container/20 text-tertiary font-label-mono-sm text-label-mono-sm font-semibold shadow-sm">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+                Confirmed
+              </span>
+</div>
+<div class="flex items-center gap-space-md text-on-surface-variant font-label-mono-sm text-label-mono-sm">
+<span class="flex items-center gap-1 text-primary">
+<span class="material-symbols-outlined text-[15px]">record_voice_over</span> Agent Nova
+              </span>
+<span class="text-outline">•</span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px]">schedule</span> 18 mins ago
+              </span>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-md items-start">
+<div class="lg:col-span-8 flex flex-col gap-space-xs">
+<span class="font-label-mono-sm text-label-mono-sm text-on-surface-variant uppercase tracking-wider">Executed Action &amp; Summary</span>
+<div class="p-space-md rounded-xl bg-surface-container-lowest/70 text-on-surface font-body-md text-body-md flex items-start gap-space-sm shadow-inner">
+<span class="material-symbols-outlined text-tertiary text-[20px] mt-0.5 shrink-0">calendar_month</span>
+<div class="flex flex-col gap-1 leading-relaxed">
+<p class="font-semibold text-on-surface">Slot reserved for Friday 10:00 AM with Dr. Vance. Synced to Google Calendar.</p>
+<p class="text-on-surface-variant font-body-sm text-body-sm">Patient ID #91024 intake questionnaire pre-filled with tooth #19 sensitivity note. CalDAV invitation emailed to patient.</p>
+</div>
+</div>
+</div>
+<div class="lg:col-span-4 flex flex-col gap-space-xs">
+<span class="font-label-mono-sm text-label-mono-sm text-on-surface-variant uppercase tracking-wider">Acoustic Audio Context</span>
+<div class="p-space-sm rounded-xl bg-surface-container-lowest/70 flex flex-col gap-space-xs shadow-inner">
+<div class="flex items-center justify-between text-label-mono-sm font-label-mono-sm text-outline px-1">
+<span>Call Segment (01:05 - 01:28)</span>
+<span class="text-tertiary font-semibold">23s</span>
+</div>
+<div class="h-9 w-full bg-surface-container-high rounded-lg flex items-center justify-between px-2 gap-0.5">
+<div class="w-1 bg-tertiary h-3 rounded-full"></div>
+<div class="w-1 bg-tertiary h-4 rounded-full"></div>
+<div class="w-1 bg-tertiary h-6 rounded-full"></div>
+<div class="w-1 bg-tertiary h-8 rounded-full"></div>
+<div class="w-1 bg-tertiary h-5 rounded-full"></div>
+<div class="w-1 bg-tertiary h-7 rounded-full"></div>
+<div class="w-1 bg-tertiary h-4 rounded-full"></div>
+<div class="w-1 bg-tertiary h-2 rounded-full"></div>
+<div class="w-1 bg-tertiary h-5 rounded-full"></div>
+<div class="w-1 bg-tertiary h-6 rounded-full"></div>
+<div class="w-1 bg-tertiary h-7 rounded-full"></div>
+<div class="w-1 bg-tertiary h-3 rounded-full"></div>
+<div class="w-1 bg-tertiary h-6 rounded-full"></div>
+<div class="w-1 bg-tertiary h-4 rounded-full"></div>
+<div class="w-1 bg-tertiary h-2 rounded-full"></div>
+<div class="w-1 bg-tertiary h-5 rounded-full"></div>
+<div class="w-1 bg-tertiary h-7 rounded-full"></div>
+<div class="w-1 bg-tertiary h-8 rounded-full"></div>
+<div class="w-1 bg-tertiary h-4 rounded-full"></div>
+<div class="w-1 bg-tertiary h-2 rounded-full"></div>
+<div class="w-1 bg-tertiary h-6 rounded-full"></div>
+<div class="w-1 bg-tertiary h-3 rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="flex flex-wrap items-center justify-between gap-space-sm pt-space-xs">
+<div class="flex flex-wrap items-center gap-space-xs text-on-surface-variant font-label-mono-sm text-label-mono-sm">
+<span class="bg-surface-container-high px-2 py-1 rounded-md text-on-surface">Clinic: Bay Dental Surgery</span>
+<span class="bg-surface-container-high px-2 py-1 rounded-md text-on-surface">Tool: google.calendar.insert</span>
+<span class="bg-surface-container-high px-2 py-1 rounded-md text-on-surface">Confidence: 99.9%</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<button class="audio-play-btn flex items-center gap-1.5 px-space-md py-2 rounded-lg bg-surface-container-high hover:bg-surface-bright text-on-surface font-body-sm text-body-sm transition-all shadow-sm" data-audio="dental-sample">
+<span class="material-symbols-outlined text-[18px] text-tertiary">play_arrow</span>
+<span>View Audio Clip</span>
+</button>
+<button class="copy-json-btn flex items-center gap-1.5 px-space-md py-2 rounded-lg bg-surface-container-high hover:bg-surface-bright text-on-surface font-body-sm text-body-sm transition-all shadow-sm" data-payload='{"taskId":"VOC-7720","practitioner":"Dr. Vance","slot":"Friday 10:00 AM","patientId":"91024","calendarEventId":"cal_724018","status":"CONFIRMED"}'>
+<span class="material-symbols-outlined text-[18px] text-outline">code</span>
+<span>Copy JSON</span>
+</button>
+<button class="toggle-details-btn p-2 rounded-lg bg-surface-container-high hover:bg-surface-bright text-on-surface-variant hover:text-on-surface transition-all" title="Expand raw verification ledger">
+<span class="material-symbols-outlined text-[20px] transition-transform duration-200">expand_more</span>
+</button>
+</div>
+</div>
+<div class="details-drawer hidden flex-col gap-space-sm bg-surface-container-lowest/90 p-space-md rounded-xl mt-space-xs shadow-inner">
+<div class="flex items-center justify-between text-outline font-label-mono-sm text-label-mono-sm">
+<span>RAW TOOL INVOCATION TELEMETRY</span>
+<span class="text-tertiary">Cryptographic Hash: a718f3a97011b933827ec50811e5a329d45e43a9b1c738e4a91f582046</span>
+</div>
+<pre class="bg-surface-container-low p-space-sm rounded-lg text-tertiary font-label-mono-sm text-label-mono-sm overflow-x-auto leading-relaxed">{
+  "task_id": "VOC-7720",
+  "tool": "google_calendar.create_event",
+  "summary": "Dental Checkup - Dr. Vance",
+  "start": "2025-10-24T10:00:00-07:00",
+  "end": "2025-10-24T10:45:00-07:00",
+  "attendees": ["patient.sarah@gmail.com", "reception@baydentalsf.com"],
+  "reminders": {"useDefault": false, "overrides": [{"method": "sms", "minutes": 120}]}
+}</pre>
+</div>
+</div>
+<div class="receipt-card group bg-surface-container/75 backdrop-blur-xl p-space-lg rounded-xl shadow-xl flex flex-col gap-space-md transition-all hover:bg-surface-container duration-200" data-task-id="VOC-7719">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-sm pb-space-sm bg-surface-container-lowest/30 p-space-sm rounded-lg">
+<div class="flex flex-wrap items-center gap-space-sm">
+<span class="font-label-mono-sm text-label-mono-sm text-outline px-2 py-1 bg-surface-container-lowest rounded-md">ID: VOC-7719</span>
+<h2 class="font-headline-sm text-headline-sm font-bold text-on-surface tracking-tight">Hardware Gateway Diagnostic</h2>
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-secondary-container/30 text-secondary font-label-mono-sm text-label-mono-sm font-semibold shadow-sm">
+<span class="material-symbols-outlined text-[14px]">confirmation_number</span>
+                Ticket Dispatched
+              </span>
+</div>
+<div class="flex items-center gap-space-md text-on-surface-variant font-label-mono-sm text-label-mono-sm">
+<span class="flex items-center gap-1 text-primary">
+<span class="material-symbols-outlined text-[15px]">record_voice_over</span> Agent Atlas
+              </span>
+<span class="text-outline">•</span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px]">schedule</span> 45 mins ago
+              </span>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-md items-start">
+<div class="lg:col-span-8 flex flex-col gap-space-xs">
+<span class="font-label-mono-sm text-label-mono-sm text-on-surface-variant uppercase tracking-wider">Executed Action &amp; Summary</span>
+<div class="p-space-md rounded-xl bg-surface-container-lowest/70 text-on-surface font-body-md text-body-md flex items-start gap-space-sm shadow-inner">
+<span class="material-symbols-outlined text-secondary text-[20px] mt-0.5 shrink-0">router</span>
+<div class="flex flex-col gap-1 leading-relaxed">
+<p class="font-semibold text-on-surface">Zendesk ticket #4819 created with priority High. Notified Tier-2 support.</p>
+<p class="text-on-surface-variant font-body-sm text-body-sm">Signal loss error pattern 0x882B detected on DOCSIS 3.1 uplink. Automated remote reboot signal initiated; ticket escalated for technician dispatch.</p>
+</div>
+</div>
+</div>
+<div class="lg:col-span-4 flex flex-col gap-space-xs">
+<span class="font-label-mono-sm text-label-mono-sm text-on-surface-variant uppercase tracking-wider">Acoustic Audio Context</span>
+<div class="p-space-sm rounded-xl bg-surface-container-lowest/70 flex flex-col gap-space-xs shadow-inner">
+<div class="flex items-center justify-between text-label-mono-sm font-label-mono-sm text-outline px-1">
+<span>Call Segment (03:41 - 04:15)</span>
+<span class="text-secondary font-semibold">34s</span>
+</div>
+<div class="h-9 w-full bg-surface-container-high rounded-lg flex items-center justify-between px-2 gap-0.5">
+<div class="w-1 bg-secondary h-4 rounded-full"></div>
+<div class="w-1 bg-secondary h-7 rounded-full"></div>
+<div class="w-1 bg-secondary h-8 rounded-full"></div>
+<div class="w-1 bg-secondary h-5 rounded-full"></div>
+<div class="w-1 bg-secondary h-2 rounded-full"></div>
+<div class="w-1 bg-secondary h-6 rounded-full"></div>
+<div class="w-1 bg-secondary h-7 rounded-full"></div>
+<div class="w-1 bg-secondary h-4 rounded-full"></div>
+<div class="w-1 bg-secondary h-3 rounded-full"></div>
+<div class="w-1 bg-secondary h-8 rounded-full"></div>
+<div class="w-1 bg-secondary h-6 rounded-full"></div>
+<div class="w-1 bg-secondary h-5 rounded-full"></div>
+<div class="w-1 bg-secondary h-7 rounded-full"></div>
+<div class="w-1 bg-secondary h-4 rounded-full"></div>
+<div class="w-1 bg-secondary h-2 rounded-full"></div>
+<div class="w-1 bg-secondary h-5 rounded-full"></div>
+<div class="w-1 bg-secondary h-8 rounded-full"></div>
+<div class="w-1 bg-secondary h-7 rounded-full"></div>
+<div class="w-1 bg-secondary h-3 rounded-full"></div>
+<div class="w-1 bg-secondary h-6 rounded-full"></div>
+<div class="w-1 bg-secondary h-4 rounded-full"></div>
+<div class="w-1 bg-secondary h-2 rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="flex flex-wrap items-center justify-between gap-space-sm pt-space-xs">
+<div class="flex flex-wrap items-center gap-space-xs text-on-surface-variant font-label-mono-sm text-label-mono-sm">
+<span class="bg-surface-container-high px-2 py-1 rounded-md text-on-surface">Target: Zendesk Enterprise</span>
+<span class="bg-surface-container-high px-2 py-1 rounded-md text-on-surface">Queue: NOC Tier-2 Urgent</span>
+<span class="bg-surface-container-high px-2 py-1 rounded-md text-on-surface">Confidence: 98.9%</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<button class="audio-play-btn flex items-center gap-1.5 px-space-md py-2 rounded-lg bg-surface-container-high hover:bg-surface-bright text-on-surface font-body-sm text-body-sm transition-all shadow-sm" data-audio="gateway-sample">
+<span class="material-symbols-outlined text-[18px] text-secondary">play_arrow</span>
+<span>View Audio Clip</span>
+</button>
+<button class="copy-json-btn flex items-center gap-1.5 px-space-md py-2 rounded-lg bg-surface-container-high hover:bg-surface-bright text-on-surface font-body-sm text-body-sm transition-all shadow-sm" data-payload='{"taskId":"VOC-7719","ticketId":"4819","priority":"High","system":"DOCSIS_31","errorCode":"0x882B","action":"Tier-2 Dispatched"}'>
+<span class="material-symbols-outlined text-[18px] text-outline">code</span>
+<span>Copy JSON</span>
+</button>
+<button class="toggle-details-btn p-2 rounded-lg bg-surface-container-high hover:bg-surface-bright text-on-surface-variant hover:text-on-surface transition-all" title="Expand raw verification ledger">
+<span class="material-symbols-outlined text-[20px] transition-transform duration-200">expand_more</span>
+</button>
+</div>
+</div>
+<div class="details-drawer hidden flex-col gap-space-sm bg-surface-container-lowest/90 p-space-md rounded-xl mt-space-xs shadow-inner">
+<div class="flex items-center justify-between text-outline font-label-mono-sm text-label-mono-sm">
+<span>RAW TOOL INVOCATION TELEMETRY</span>
+<span class="text-tertiary">Cryptographic Hash: 5f9b4c09d854e76a6cf49b380dc5b778211bfa00418c99</span>
+</div>
+<pre class="bg-surface-container-low p-space-sm rounded-lg text-secondary font-label-mono-sm text-label-mono-sm overflow-x-auto leading-relaxed">{
+  "task_id": "VOC-7719",
+  "tool": "zendesk.create_ticket",
+  "ticket": {
+    "subject": "DOCSIS Signal Degradation - Modem S/N 890192A",
+    "priority": "high",
+    "tags": ["hardware_diagnostic", "tier2_escalation", "voice_automated"],
+    "requester_id": "cust_330918"
+  },
+  "modem_diagnostics": {
+    "snr_db": 18.2,
+    "downstream_power": -14.1,
+    "uncorrectable_codewords": 892019
+  }
+}</pre>
+</div>
+</div>
+<div class="receipt-card group bg-surface-container/75 backdrop-blur-xl p-space-lg rounded-xl shadow-xl flex flex-col gap-space-md transition-all hover:bg-surface-container duration-200" data-task-id="VOC-7718">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-sm pb-space-sm bg-surface-container-lowest/30 p-space-sm rounded-lg">
+<div class="flex flex-wrap items-center gap-space-sm">
+<span class="font-label-mono-sm text-label-mono-sm text-outline px-2 py-1 bg-surface-container-lowest rounded-md">ID: VOC-7718</span>
+<h2 class="font-headline-sm text-headline-sm font-bold text-on-surface tracking-tight">SMS Notification Dispatch</h2>
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-primary-container/20 text-primary font-label-mono-sm text-label-mono-sm font-semibold shadow-sm">
+<span class="material-symbols-outlined text-[14px]">done_all</span>
+                Delivered
+              </span>
+</div>
+<div class="flex items-center gap-space-md text-on-surface-variant font-label-mono-sm text-label-mono-sm">
+<span class="flex items-center gap-1 text-primary">
+<span class="material-symbols-outlined text-[15px]">record_voice_over</span> Agent Nova
+              </span>
+<span class="text-outline">•</span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px]">schedule</span> 1 hr ago
+              </span>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-md items-start">
+<div class="lg:col-span-8 flex flex-col gap-space-xs">
+<span class="font-label-mono-sm text-label-mono-sm text-on-surface-variant uppercase tracking-wider">Executed Action &amp; Summary</span>
+<div class="p-space-md rounded-xl bg-surface-container-lowest/70 text-on-surface font-body-md text-body-md flex items-start gap-space-sm shadow-inner">
+<span class="material-symbols-outlined text-primary text-[20px] mt-0.5 shrink-0">sms</span>
+<div class="flex flex-col gap-1 leading-relaxed">
+<p class="font-semibold text-on-surface">Custom itinerary link dispatched via Twilio SMS.</p>
+<p class="text-on-surface-variant font-body-sm text-body-sm">Shortlink voc.ai/t/DL902 generated with single-use JWT. Carrier delivery receipt (DLR) confirmed in 420ms without opt-out restrictions.</p>
+</div>
+</div>
+</div>
+<div class="lg:col-span-4 flex flex-col gap-space-xs">
+<span class="font-label-mono-sm text-label-mono-sm text-on-surface-variant uppercase tracking-wider">Acoustic Audio Context</span>
+<div class="p-space-sm rounded-xl bg-surface-container-lowest/70 flex flex-col gap-space-xs shadow-inner">
+<div class="flex items-center justify-between text-label-mono-sm font-label-mono-sm text-outline px-1">
+<span>Call Segment (00:42 - 00:54)</span>
+<span class="text-primary font-semibold">12s</span>
+</div>
+<div class="h-9 w-full bg-surface-container-high rounded-lg flex items-center justify-between px-2 gap-0.5">
+<div class="w-1 bg-primary h-2 rounded-full"></div>
+<div class="w-1 bg-primary h-5 rounded-full"></div>
+<div class="w-1 bg-primary h-7 rounded-full"></div>
+<div class="w-1 bg-primary h-3 rounded-full"></div>
+<div class="w-1 bg-primary h-5 rounded-full"></div>
+<div class="w-1 bg-primary h-8 rounded-full"></div>
+<div class="w-1 bg-primary h-6 rounded-full"></div>
+<div class="w-1 bg-primary h-3 rounded-full"></div>
+<div class="w-1 bg-primary h-2 rounded-full"></div>
+<div class="w-1 bg-primary h-4 rounded-full"></div>
+<div class="w-1 bg-primary h-7 rounded-full"></div>
+<div class="w-1 bg-primary h-8 rounded-full"></div>
+<div class="w-1 bg-primary h-5 rounded-full"></div>
+<div class="w-1 bg-primary h-3 rounded-full"></div>
+<div class="w-1 bg-primary h-6 rounded-full"></div>
+<div class="w-1 bg-primary h-8 rounded-full"></div>
+<div class="w-1 bg-primary h-4 rounded-full"></div>
+<div class="w-1 bg-primary h-2 rounded-full"></div>
+<div class="w-1 bg-primary h-5 rounded-full"></div>
+<div class="w-1 bg-primary h-7 rounded-full"></div>
+<div class="w-1 bg-primary h-4 rounded-full"></div>
+<div class="w-1 bg-primary h-2 rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="flex flex-wrap items-center justify-between gap-space-sm pt-space-xs">
+<div class="flex flex-wrap items-center gap-space-xs text-on-surface-variant font-label-mono-sm text-label-mono-sm">
+<span class="bg-surface-container-high px-2 py-1 rounded-md text-on-surface">Carrier Gateway: Twilio SMS</span>
+<span class="bg-surface-container-high px-2 py-1 rounded-md text-on-surface">SID: SM78a01f928e</span>
+<span class="bg-surface-container-high px-2 py-1 rounded-md text-on-surface">Confidence: 100%</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<button class="audio-play-btn flex items-center gap-1.5 px-space-md py-2 rounded-lg bg-surface-container-high hover:bg-surface-bright text-on-surface font-body-sm text-body-sm transition-all shadow-sm" data-audio="sms-sample">
+<span class="material-symbols-outlined text-[18px] text-primary">play_arrow</span>
+<span>View Audio Clip</span>
+</button>
+<button class="copy-json-btn flex items-center gap-1.5 px-space-md py-2 rounded-lg bg-surface-container-high hover:bg-surface-bright text-on-surface font-body-sm text-body-sm transition-all shadow-sm" data-payload='{"taskId":"VOC-7718","channel":"SMS","provider":"Twilio","shortlink":"voc.ai/t/DL902","dlrStatus":"DELIVERED","latencyMs":420}'>
+<span class="material-symbols-outlined text-[18px] text-outline">code</span>
+<span>Copy JSON</span>
+</button>
+<button class="toggle-details-btn p-2 rounded-lg bg-surface-container-high hover:bg-surface-bright text-on-surface-variant hover:text-on-surface transition-all" title="Expand raw verification ledger">
+<span class="material-symbols-outlined text-[20px] transition-transform duration-200">expand_more</span>
+</button>
+</div>
+</div>
+<div class="details-drawer hidden flex-col gap-space-sm bg-surface-container-lowest/90 p-space-md rounded-xl mt-space-xs shadow-inner">
+<div class="flex items-center justify-between text-outline font-label-mono-sm text-label-mono-sm">
+<span>RAW TOOL INVOCATION TELEMETRY</span>
+<span class="text-tertiary">Cryptographic Hash: 9912beff01a8820cda44b827e19904d9c72e27b9</span>
+</div>
+<pre class="bg-surface-container-low p-space-sm rounded-lg text-primary font-label-mono-sm text-label-mono-sm overflow-x-auto leading-relaxed">{
+  "task_id": "VOC-7718",
+  "tool": "twilio.messages.create",
+  "to": "+14158902134",
+  "body": "Here is your confirmed itinerary for flight DL-402: https://voc.ai/t/DL902",
+  "delivery_receipt": {
+    "sid": "SM78a01f928e",
+    "status": "delivered",
+    "price": "-0.0075 USD"
+  }
+}</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="relative bg-surface-container-low/60 rounded-xl p-space-lg flex flex-col md:flex-row items-center justify-between gap-space-md shadow-lg overflow-hidden">
+<div class="flex items-center gap-space-md">
+<div class="w-12 h-12 rounded-xl bg-surface-container-high flex items-center justify-center text-tertiary shadow-inner">
+<span class="material-symbols-outlined text-[28px]">lock_clock</span>
+</div>
+<div class="flex flex-col">
+<h3 class="font-headline-sm text-headline-sm font-semibold text-on-surface">Tamper-Proof Audit Chain</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Every task execution is hashed and appended to your enterprise SOC2/HIPAA compliance log in real-time.</p>
+</div>
+</div>
+<div class="flex items-center gap-space-sm shrink-0">
+<a class="px-space-md py-2.5 rounded-xl bg-surface-container hover:bg-surface-bright text-on-surface font-body-sm text-body-sm transition-all shadow-sm" href="#">
+          Verify Merkle Root
+        </a>
+<a class="px-space-md py-2.5 rounded-xl bg-gradient-to-r from-primary-container to-primary text-surface-container-lowest font-body-sm text-body-sm font-bold shadow-md transition-all hover:brightness-110" href="#">
+          Configure Webhooks
+        </a>
+</div>
+</div>
+</div>
+<div class="fixed bottom-6 right-6 bg-surface-container-highest text-on-surface px-space-md py-3 rounded-xl shadow-2xl flex items-center gap-space-sm transform translate-y-20 opacity-0 pointer-events-none transition-all duration-300 z-50" id="toastNotification">
+<span class="material-symbols-outlined text-tertiary text-[20px]" id="toastIcon">check_circle</span>
+<span class="font-body-sm text-body-sm" id="toastMessage">JSON payload copied to clipboard</span>
+</div>
+<script>
+    (function initReceiptsCockpit() {
+      const toast = document.getElementById('toastNotification');
+      const toastMsg = document.getElementById('toastMessage');
+      const toastIcon = document.getElementById('toastIcon');
+
+      function showToast(message, icon = 'check_circle') {
+        toastMsg.textContent = message;
+        toastIcon.textContent = icon;
+        toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+        setTimeout(() => {
+          toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+        }, 2600);
+      }
+
+      document.querySelectorAll('.toggle-details-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const card = e.currentTarget.closest('.receipt-card');
+          const drawer = card.querySelector('.details-drawer');
+          const icon = e.currentTarget.querySelector('.material-symbols-outlined');
+          const isHidden = drawer.classList.contains('hidden');
+
+          if (isHidden) {
+            drawer.classList.remove('hidden');
+            drawer.classList.add('flex');
+            icon.style.transform = 'rotate(180deg)';
+          } else {
+            drawer.classList.add('hidden');
+            drawer.classList.remove('flex');
+            icon.style.transform = 'rotate(0deg)';
+          }
+        });
+      });
+
+      document.querySelectorAll('.copy-json-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const payload = e.currentTarget.getAttribute('data-payload');
+          if (navigator.clipboard && payload) {
+            navigator.clipboard.writeText(payload).then(() => {
+              showToast('Task execution receipt JSON copied');
+            }).catch(() => {
+              showToast('Payload copied to buffer');
+            });
+          } else {
+            showToast('Receipt JSON ready');
+          }
+        });
+      });
+
+      document.querySelectorAll('.audio-play-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const icon = e.currentTarget.querySelector('.material-symbols-outlined');
+          const span = e.currentTarget.querySelector('span:last-child');
+          const isPlaying = icon.textContent === 'pause';
+
+          document.querySelectorAll('.audio-play-btn').forEach(other => {
+            other.querySelector('.material-symbols-outlined').textContent = 'play_arrow';
+            other.querySelector('span:last-child').textContent = 'View Audio Clip';
+          });
+
+          if (!isPlaying) {
+            icon.textContent = 'pause';
+            span.textContent = 'Playing Clip...';
+            showToast('Streaming telephony opus audio snippet', 'graphic_eq');
+          } else {
+            icon.textContent = 'play_arrow';
+            span.textContent = 'View Audio Clip';
+          }
+        });
+      });
+
+      const searchInput = document.getElementById('searchReceipts');
+      if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+          const term = e.target.value.toLowerCase().trim();
+          const cards = document.querySelectorAll('.receipt-card');
+          cards.forEach(card => {
+            const text = card.textContent.toLowerCase();
+            if (text.includes(term)) {
+              card.style.display = 'flex';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        });
+      }
+
+      const exportBtn = document.getElementById('exportBatchBtn');
+      if (exportBtn) {
+        exportBtn.addEventListener('click', () => {
+          showToast('Preparing signed audit report for export...', 'file_download');
+        });
+      }
+    })();
+  </script>
+</div></main><footer class="w-full bg-surface-container-lowest/80 backdrop-blur-md py-space-md shadow-[0_-1px_12px_rgba(0,0,0,0.3)]"><div class="w-full px-margin-mobile md:px-margin flex flex-col sm:flex-row items-center justify-between gap-space-sm text-on-surface-variant font-label-mono-sm text-label-mono-sm"><div><span>© 2025 Vocalis.ai Autonomous Voice Intelligence</span></div><div class="flex items-center gap-space-lg text-on-surface-variant"><span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_6px_#4cd7f6]"></span> WebRTC Standby</span><span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-tertiary shadow-[0_0_6px_#4fdbc8]"></span> 48kHz Opus</span><span class="text-outline font-label-mono-sm">Latency: &lt;120ms</span></div></div></footer></body></html>

@@ -82,6 +82,24 @@ def save_message(session_id: str, role: str, content: str, db: Session):
         db.rollback()
 
 
+def sanitize_model_slug(raw_name: str) -> str:
+    """Normalizes arbitrary model strings into valid Google GenAI model slugs."""
+    if not raw_name:
+        return "gemini-2.5-flash"
+    clean = raw_name.strip().lower()
+    if "3.1" in clean or "lite" in clean:
+        return "gemini-2.0-flash-lite"
+    if "2.5" in clean and "pro" in clean:
+        return "gemini-2.5-pro"
+    if "2.5" in clean:
+        return "gemini-2.5-flash"
+    if "2.0" in clean and "lite" in clean:
+        return "gemini-2.0-flash-lite"
+    if "2.0" in clean:
+        return "gemini-2.0-flash"
+    return "gemini-2.5-flash"
+
+
 def run_agent_loop(
     session_id: str,
     user_text: str,
@@ -125,7 +143,8 @@ def run_agent_loop(
     tools_used = []
     final_reply = ""
 
-    candidate_models = [settings.GEMINI_MODEL, "gemini-2.0-flash-lite", "gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash", "gemini-1.5-flash-8b"]
+    primary_slug = sanitize_model_slug(settings.GEMINI_MODEL)
+    candidate_models = [primary_slug, "gemini-2.5-flash", "gemini-2.0-flash-lite", "gemini-2.0-flash", "gemini-2.5-pro"]
     models_to_try = list(dict.fromkeys(m for m in candidate_models if m))
 
     last_error = None
@@ -155,16 +174,16 @@ def run_agent_loop(
                     except Exception as exc:
                         last_error = exc
                         err_str = str(exc).lower()
-                        if "invalid_argument" in err_str or "unexpected model" in err_str or "400" in err_str:
-                            logger.warning(f"Invalid model slug '{model_name}': {exc}. Skipping instantly to next valid model...")
-                            break  # Skip bad model name immediately without retrying/backing off
+                        if "404" in err_str or "not found" in err_str or "400" in err_str or "invalid_argument" in err_str:
+                            logger.warning(f"Unsupported model '{model_name}': {exc}. Skipping immediately...")
+                            break  # Immediately skip unsupported/invalid model
                         elif "429" in err_str or "503" in err_str or "quota" in err_str or "rate" in err_str:
-                            logger.warning(f"Gemini {model_name} rate/capacity limit hit (Attempt {attempt+1}): {exc}. Backing off...")
+                            logger.warning(f"Gemini {model_name} rate limit hit (Attempt {attempt+1}): {exc}. Backing off...")
                             import time
                             time.sleep(1.2 * (attempt + 1))
                             continue
                         else:
-                            break  # Non-rate-limit error, skip to next model
+                            break
                 if final_reply:
                     break
             if final_reply:

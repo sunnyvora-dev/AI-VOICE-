@@ -83,25 +83,18 @@ def save_message(session_id: str, role: str, content: str, db: Session):
 
 
 def sanitize_model_slug(raw_name: str) -> str:
-    """Normalizes arbitrary model strings into valid Google GenAI model slugs."""
+    """Normalizes model names into official 2026 Google GenAI model slugs."""
     if not raw_name:
-        return "gemini-2.5-flash"
+        return "gemini-3.5-flash-lite"
     clean = raw_name.strip().lower()
-    if "3.5" in clean:
-        return "gemini-3.5-flash" if "gemini" in clean else "gemini-3.5-flash"
-    if "3" in clean and ("live" in clean or "flash" in clean):
-        return "gemini-2.5-flash"
-    if "3.1" in clean or "lite" in clean:
-        return "gemini-2.0-flash-lite"
-    if "2.5" in clean and "pro" in clean:
-        return "gemini-2.5-pro"
-    if "2.5" in clean:
-        return "gemini-2.5-flash"
-    if "2.0" in clean and "lite" in clean:
-        return "gemini-2.0-flash-lite"
-    if "2.0" in clean:
-        return "gemini-2.0-flash"
-    return clean if clean.startswith("gemini-") else "gemini-2.5-flash"
+    if "lite" in clean or "3.5" in clean or "3.1" in clean:
+        return "gemini-3.5-flash-lite"
+    if "pro" in clean:
+        return "gemini-3.1-pro-preview"
+    if "3.8" in clean or "flash" in clean or "2.5" in clean or "2.0" in clean:
+        return "gemini-3.8-flash"
+    return clean if clean.startswith("gemini-") else "gemini-3.5-flash-lite"
+
 
 
 
@@ -149,7 +142,7 @@ def run_agent_loop(
     final_reply = ""
 
     primary_slug = sanitize_model_slug(settings.GEMINI_MODEL)
-    candidate_models = [primary_slug, "gemini-2.5-flash", "gemini-2.0-flash-lite", "gemini-2.0-flash", "gemini-2.5-pro"]
+    candidate_models = [primary_slug, "gemini-3.5-flash-lite", "gemini-3.8-flash", "gemini-3.1-pro-preview"]
     models_to_try = list(dict.fromkeys(m for m in candidate_models if m))
 
     last_error = None

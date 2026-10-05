@@ -123,7 +123,7 @@ def run_agent_loop(
     tools_used = []
     final_reply = ""
 
-    candidate_models = [settings.GEMINI_MODEL, "gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash"]
+    candidate_models = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash", settings.GEMINI_MODEL]
     # De-duplicate preserving order
     models_to_try = list(dict.fromkeys(m for m in candidate_models if m))
 

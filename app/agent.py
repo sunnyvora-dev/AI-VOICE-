@@ -116,47 +116,64 @@ def run_agent_loop(
             save_message(session_id, "assistant", reply, db)
             return {"reply": reply, "tools_used": ["restart_container"], "needs_confirmation": False}
 
-    api_key = settings.GEMINI_API_KEY or os.getenv("GEMINI_API_KEY", "")
-    if not api_key or api_key in ("your_gemini_api_key_here", "your_anthropic_api_key_here"):
+    raw_keys = settings.GEMINI_API_KEY or os.getenv("GEMINI_API_KEY", "")
+    api_keys = [k.strip() for k in raw_keys.split(",") if k.strip() and k.strip() not in ("your_gemini_api_key_here", "your_anthropic_api_key_here")]
+
+    if not api_keys:
         return _fallback_agent_response(session_id, user_text, user_confirmed, db)
 
     tools_used = []
     final_reply = ""
 
-    candidate_models = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash", settings.GEMINI_MODEL]
-    # De-duplicate preserving order
+    candidate_models = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash", "gemini-1.5-pro", settings.GEMINI_MODEL]
     models_to_try = list(dict.fromkeys(m for m in candidate_models if m))
 
-    if client is None:
-        client = genai.Client(
-            api_key=api_key,
-            http_options=types.HttpOptions(timeout=30000)
-        )
-
-    config = types.GenerateContentConfig(
-        system_instruction=SYSTEM_PROMPT,
-        tools=SAFE_TOOL_FUNCTIONS
-    )
-
     last_error = None
-    for model_name in models_to_try:
+    # Try across key pool & model pool
+    for key_idx, key_val in enumerate(api_keys):
         try:
-            chat = client.chats.create(
-                model=model_name,
-                config=config
+            curr_client = genai.Client(
+                api_key=key_val,
+                http_options=types.HttpOptions(timeout=30000)
             )
-            response = chat.send_message(user_text)
-            if response and hasattr(response, 'text') and response.text:
-                final_reply = response.text.strip()
+            config = types.GenerateContentConfig(
+                system_instruction=SYSTEM_PROMPT,
+                tools=SAFE_TOOL_FUNCTIONS
+            )
+
+            for model_name in models_to_try:
+                for attempt in range(2):  # Up to 2 attempts with brief backoff
+                    try:
+                        chat = curr_client.chats.create(
+                            model=model_name,
+                            config=config
+                        )
+                        response = chat.send_message(user_text)
+                        if response and hasattr(response, 'text') and response.text:
+                            final_reply = response.text.strip()
+                            break
+                    except Exception as exc:
+                        last_error = exc
+                        err_str = str(exc).lower()
+                        if "429" in err_str or "503" in err_str or "quota" in err_str or "rate" in err_str:
+                            logger.warning(f"Gemini {model_name} rate/capacity limit hit (Attempt {attempt+1}): {exc}. Backing off...")
+                            import time
+                            time.sleep(1.2 * (attempt + 1))
+                            continue
+                        else:
+                            break  # Non-rate-limit error, skip to next model
+                if final_reply:
+                    break
+            if final_reply:
                 break
-        except Exception as exc:
-            last_error = exc
-            logger.warning(f"Gemini API model {model_name} failed: {exc}. Trying next candidate model...")
+        except Exception as k_exc:
+            last_error = k_exc
             continue
 
     if not final_reply and last_error:
-        logger.warning(f"All Gemini models failed. Last error: {last_error}. Falling back to offline tool engine...")
+        logger.warning(f"All Gemini API keys/models exhausted. Last error: {last_error}. Falling back to offline engine...")
         return _fallback_agent_response(session_id, user_text, user_confirmed, db)
+
 
 
     if not final_reply:

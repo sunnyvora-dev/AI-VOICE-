@@ -1,4 +1,5 @@
 # Google Gemini SDK & Twilio SDK
+google-genai>=0.1.1
 google-generativeai>=0.8.0
 twilio>=9.0.0
 

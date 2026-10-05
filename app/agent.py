@@ -87,6 +87,10 @@ def sanitize_model_slug(raw_name: str) -> str:
     if not raw_name:
         return "gemini-2.5-flash"
     clean = raw_name.strip().lower()
+    if "3.5" in clean:
+        return "gemini-3.5-flash" if "gemini" in clean else "gemini-3.5-flash"
+    if "3" in clean and ("live" in clean or "flash" in clean):
+        return "gemini-2.5-flash"
     if "3.1" in clean or "lite" in clean:
         return "gemini-2.0-flash-lite"
     if "2.5" in clean and "pro" in clean:
@@ -97,7 +101,8 @@ def sanitize_model_slug(raw_name: str) -> str:
         return "gemini-2.0-flash-lite"
     if "2.0" in clean:
         return "gemini-2.0-flash"
-    return "gemini-2.5-flash"
+    return clean if clean.startswith("gemini-") else "gemini-2.5-flash"
+
 
 
 def run_agent_loop(

@@ -2,7 +2,7 @@
 <html class="dark" lang="en">
 <head>
     <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" name="viewport"/>
     <title>Vocalis.ai | Autonomous Voice Intelligence</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
@@ -59,6 +59,11 @@
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(134, 147, 151, 0.15);
         }
+        @supports (padding-bottom: env(safe-area-inset-bottom)) {
+            .safe-pb {
+                padding-bottom: calc(1rem + env(safe-area-inset-bottom));
+            }
+        }
     </style>
 </head>
 <body class="bg-surface-container-lowest font-body-md text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container min-h-screen flex flex-col justify-between relative overflow-x-hidden" style='background-image: radial-gradient(circle at 50% 0%, rgba(6, 182, 212, 0.12) 0%, rgba(15, 19, 29, 0) 65%), linear-gradient(rgba(10, 14, 24, 0.94), rgba(15, 19, 29, 0.96)); background-size: cover; background-attachment: fixed;'>
@@ -68,16 +73,16 @@
         <div class="h-16 w-full max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between">
             
             <!-- Logo & Brand -->
-            <div class="flex items-center gap-6">
-                <div class="flex items-center gap-3">
-                    <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-primary-container to-tertiary flex items-center justify-center shadow-[0_0_16px_rgba(6,182,212,0.4)]">
-                        <span class="material-symbols-outlined text-on-primary-container font-bold text-xl">mic</span>
+            <div class="flex items-center gap-3 sm:gap-6">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-gradient-to-tr from-primary-container to-tertiary flex items-center justify-center shadow-[0_0_16px_rgba(6,182,212,0.4)]">
+                        <span class="material-symbols-outlined text-on-primary-container font-bold text-lg sm:text-xl">mic</span>
                     </div>
-                    <span class="font-headline-sm text-lg text-on-surface tracking-tight font-bold">Vocalis.ai</span>
+                    <span class="font-headline-sm text-base sm:text-lg text-on-surface tracking-tight font-bold">Vocalis.ai</span>
                 </div>
                 <div class="h-4 w-px bg-outline/20 hidden md:block"></div>
                 
-                <!-- Navigation Tabs -->
+                <!-- Desktop Navigation Tabs -->
                 <nav class="hidden md:flex items-center gap-1">
                     <button class="nav-tab px-4 py-1.5 rounded-full text-sm font-semibold transition-all bg-surface-container text-primary shadow-[inset_0_0_12px_rgba(6,182,212,0.15)] border border-primary/20" data-tab="assistant">
                         Assistant
@@ -95,25 +100,25 @@
             </div>
 
             <!-- Header Controls -->
-            <div class="flex items-center gap-3">
-                <div class="flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-low border border-tertiary/20">
+            <div class="flex items-center gap-2 sm:gap-3">
+                <div class="flex items-center gap-1.5 sm:gap-2 px-2.5 py-1 rounded-full bg-surface-container-low border border-tertiary/20">
                     <span class="relative flex h-2 w-2">
                         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-tertiary opacity-75"></span>
                         <span class="relative inline-flex rounded-full h-2 w-2 bg-tertiary shadow-[0_0_8px_#4fdbc8]"></span>
                     </span>
-                    <span class="font-label-mono-sm text-xs text-tertiary-fixed tracking-wider uppercase" id="headerEngineStatus">Gemini 3.5 Ready</span>
+                    <span class="font-label-mono-sm text-[10px] sm:text-xs text-tertiary-fixed tracking-wider uppercase" id="headerEngineStatus">Gemini Ready</span>
                 </div>
 
-                <button id="directCallModalBtn" class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-semibold text-xs shadow-[0_0_16px_rgba(16,185,129,0.3)] hover:scale-105 transition-all">
+                <button id="directCallModalBtn" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-semibold text-xs shadow-[0_0_16px_rgba(16,185,129,0.3)] hover:scale-105 transition-all">
                     <span class="material-symbols-outlined text-sm">call</span>
-                    <span>Twilio Call</span>
+                    <span class="hidden sm:inline">Twilio Call</span>
                 </button>
             </div>
         </div>
     </header>
 
     <!-- Main Content Canvas -->
-    <main class="w-full pt-20 pb-16 flex-1 flex flex-col relative max-w-7xl mx-auto px-4 sm:px-6">
+    <main class="w-full pt-20 pb-24 md:pb-16 flex-1 flex flex-col relative max-w-7xl mx-auto px-4 sm:px-6">
 
         <!-- TAB 1: ONE-TOUCH AI ASSISTANT (Hero Standby Screen) -->
         <section id="tab-assistant" class="tab-content flex flex-col w-full relative min-h-[calc(100vh-8rem)] justify-center items-center overflow-hidden select-none py-8">
@@ -194,7 +199,7 @@
                         <span class="font-label-mono-sm text-xs text-outline uppercase tracking-wider">Suggested Autonomous Directives</span>
                         <span class="w-1.5 h-1.5 rounded-full bg-primary/40"></span>
                     </div>
-                    <div class="flex flex-wrap items-center justify-center gap-2 max-w-2xl">
+                    <div class="flex flex-nowrap sm:flex-wrap items-center justify-start sm:justify-center gap-2 max-w-full overflow-x-auto px-2 py-1 scroll-smooth">
                         <button class="directive-pill px-4 py-2 rounded-full bg-surface-container/60 hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface border border-outline/10 shadow-[0_2px_12px_rgba(0,0,0,0.3)] transition-all font-body-sm text-xs flex items-center gap-2 group" data-prompt="What is the system status?">
                             <span class="material-symbols-outlined text-sm text-primary opacity-70 group-hover:opacity-100">computer</span>
                             <span>“Check System Status”</span>
@@ -409,8 +414,28 @@
         </button>
     </div>
 
+    <!-- Mobile Bottom Navigation Bar (Visible on mobile screens < md) -->
+    <div class="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-surface-container-lowest/95 backdrop-blur-2xl border-t border-outline/15 px-3 py-2 flex items-center justify-around shadow-[0_-4px_24px_rgba(0,0,0,0.6)] safe-pb">
+        <button class="nav-tab flex flex-col items-center gap-0.5 text-[11px] font-semibold py-1 px-3 rounded-xl transition-all text-primary" data-tab="assistant">
+            <span class="material-symbols-outlined text-lg">mic</span>
+            <span>Assistant</span>
+        </button>
+        <button class="nav-tab flex flex-col items-center gap-0.5 text-[11px] font-medium py-1 px-3 rounded-xl transition-all text-on-surface-variant hover:text-on-surface" data-tab="live-call">
+            <span class="material-symbols-outlined text-lg">call</span>
+            <span>Call</span>
+        </button>
+        <button class="nav-tab flex flex-col items-center gap-0.5 text-[11px] font-medium py-1 px-3 rounded-xl transition-all text-on-surface-variant hover:text-on-surface" data-tab="task-receipts">
+            <span class="material-symbols-outlined text-lg">receipt_long</span>
+            <span>Receipts</span>
+        </button>
+        <button class="nav-tab flex flex-col items-center gap-0.5 text-[11px] font-medium py-1 px-3 rounded-xl transition-all text-on-surface-variant hover:text-on-surface" data-tab="agent-settings">
+            <span class="material-symbols-outlined text-lg">settings</span>
+            <span>Settings</span>
+        </button>
+    </div>
+
     <!-- Sticky Footer -->
-    <footer class="w-full bg-surface-container-lowest/80 backdrop-blur-md py-4 border-t border-outline/10">
+    <footer class="w-full bg-surface-container-lowest/80 backdrop-blur-md py-4 border-t border-outline/10 mb-14 md:mb-0">
         <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-on-surface-variant font-label-mono-sm text-xs">
             <div>
                 <span>© 2025 Vocalis.ai Autonomous Voice Intelligence</span>
@@ -426,3 +451,4 @@
     <script src="/static/app.js"></script>
 </body>
 </html>
+

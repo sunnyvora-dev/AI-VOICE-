@@ -19,7 +19,26 @@ from app.twilio_routes import router as twilio_router
 async def lifespan(app: FastAPI):
     # Initialize database tables on startup
     init_db()
+
+    # 24x7 Keep-Alive Task for Render Free Tier
+    import asyncio, httpx
+    async def keep_alive_heartbeat():
+        await asyncio.sleep(15)
+        while True:
+            try:
+                public_url = settings.PUBLIC_URL.strip() if settings.PUBLIC_URL else ""
+                if public_url and "localhost" not in public_url and "127.0.0.1" not in public_url:
+                    health_url = f"{public_url.rstrip('/')}/health"
+                    async with httpx.AsyncClient(timeout=10.0) as client:
+                        await client.get(health_url)
+            except Exception:
+                pass
+            await asyncio.sleep(600)  # Ping every 10 minutes to prevent Render sleep
+
+    heartbeat_task = asyncio.create_task(keep_alive_heartbeat())
     yield
+    heartbeat_task.cancel()
+
 
 
 app = FastAPI(

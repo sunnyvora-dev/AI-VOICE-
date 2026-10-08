@@ -23,11 +23,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         navTabs.forEach(tab => {
             if (tab.getAttribute('data-tab') === tabId) {
-                tab.className = "nav-tab px-4 py-1.5 rounded-full text-sm font-semibold transition-all bg-surface-container text-primary shadow-[inset_0_0_12px_rgba(6,182,212,0.15)] border border-primary/20";
+                tab.className = "nav-tab px-4 py-2 rounded-md text-xs font-mono font-bold transition-all bg-[#171717] text-[#F4F0E6] border border-[#171717]";
             } else {
-                tab.className = "nav-tab px-4 py-1.5 rounded-full text-sm font-medium text-on-surface-variant hover:text-on-surface hover:bg-surface-container/60 transition-all";
+                tab.className = "nav-tab px-4 py-2 rounded-md text-xs font-mono font-semibold text-[#525252] hover:text-[#171717] hover:bg-[#EAE4D5] border border-transparent transition-all";
             }
         });
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     navTabs.forEach(tab => {
@@ -69,6 +71,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const simulatedCallLog = document.getElementById('simulatedCallLog');
     const directCallModalBtn = document.getElementById('directCallModalBtn');
 
+    // Canvas Visualizer Setup
+    const heroVisualizer = document.getElementById('heroVisualizer');
     let isListening = false;
     let isMuted = false;
     let recognition = null;
@@ -77,6 +81,44 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (webhookUrlInput) {
         webhookUrlInput.value = `${window.location.origin}/twilio/voice`;
+    }
+
+    // Hero Visualizer Animation Engine
+    if (heroVisualizer) {
+        const ctx = heroVisualizer.getContext('2d');
+        let phase = 0;
+
+        function drawVisualizer() {
+            const width = heroVisualizer.width;
+            const height = heroVisualizer.height;
+            const centerX = width / 2;
+            const centerY = height / 2;
+            const radius = 100;
+
+            ctx.clearRect(0, 0, width, height);
+
+            // Retro Stepped Wave Ring
+            ctx.beginPath();
+            const bars = 40;
+            for (let i = 0; i < bars; i++) {
+                const angle = (i / bars) * Math.PI * 2;
+                const waveAmp = isListening ? Math.sin(phase + i * 0.5) * 16 + 12 : Math.sin(phase * 0.6 + i * 0.3) * 5 + 2;
+                const r = radius + waveAmp;
+                const x = centerX + r * Math.cos(angle);
+                const y = centerY + r * Math.sin(angle);
+
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.closePath();
+            ctx.strokeStyle = isListening ? '#F05A3C' : '#2457D6';
+            ctx.lineWidth = isListening ? 3 : 2;
+            ctx.stroke();
+
+            phase += isListening ? 0.12 : 0.04;
+            requestAnimationFrame(drawVisualizer);
+        }
+        drawVisualizer();
     }
 
     // Voice Synthesis Population
@@ -93,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
             availableVoices.forEach((voice, index) => {
                 const option = document.createElement('option');
                 option.value = index;
-                option.textContent = `🗣️ ${voice.name} (${voice.lang})`;
+                option.textContent = `${voice.name} (${voice.lang})`;
                 voiceSelect.appendChild(option);
             });
             const savedVoiceIdx = localStorage.getItem('voice_index');
@@ -110,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (voiceSelect) {
         voiceSelect.addEventListener('change', () => {
             localStorage.setItem('voice_index', voiceSelect.value);
-            if (currentReplyText) speakText("Voice changed.");
+            if (currentReplyText) speakText("Voice selection updated.");
         });
     }
 
@@ -121,14 +163,16 @@ document.addEventListener('DOMContentLoaded', () => {
         recognition = new SpeechRecognition();
         recognition.continuous = false;
         recognition.interimResults = true;
-        recognition.lang = langSelect.value;
+        recognition.lang = langSelect ? langSelect.value : 'en-US';
 
         recognition.onstart = () => {
             isListening = true;
-            callOverlay.classList.remove('opacity-0', 'pointer-events-none');
-            callOverlay.classList.add('opacity-100', 'pointer-events-auto');
-            heroStatusHeading.textContent = "Vocalis AI is listening...";
-            heroStatusSubtext.textContent = "Speak clearly into your microphone...";
+            if (callOverlay) {
+                callOverlay.classList.remove('opacity-0', 'pointer-events-none');
+                callOverlay.classList.add('opacity-100', 'pointer-events-auto');
+            }
+            if (heroStatusHeading) heroStatusHeading.textContent = "LISTENING FOR DIRECTIVE...";
+            if (heroStatusSubtext) heroStatusSubtext.textContent = "Speak clearly into your workstation microphone...";
         };
 
         recognition.onresult = (event) => {
@@ -165,9 +209,11 @@ document.addEventListener('DOMContentLoaded', () => {
             stopListening();
         };
 
-        langSelect.addEventListener('change', () => {
-            if (recognition) recognition.lang = langSelect.value;
-        });
+        if (langSelect) {
+            langSelect.addEventListener('change', () => {
+                if (recognition) recognition.lang = langSelect.value;
+            });
+        }
     }
 
     function startListening() {
@@ -178,10 +224,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function stopListening() {
         isListening = false;
-        callOverlay.classList.add('opacity-0', 'pointer-events-none');
-        callOverlay.classList.remove('opacity-100', 'pointer-events-auto');
-        heroStatusHeading.textContent = "Vocalis AI is standing by";
-        heroStatusSubtext.textContent = "Tap once to initiate real-time audio and assign complex operations.";
+        if (callOverlay) {
+            callOverlay.classList.add('opacity-0', 'pointer-events-none');
+            callOverlay.classList.remove('opacity-100', 'pointer-events-auto');
+        }
+        if (heroStatusHeading) heroStatusHeading.textContent = "RUN YOUR NEXT TASK.";
+        if (heroStatusSubtext) heroStatusSubtext.textContent = "Tap microphone or select a directive to assign complex operations.";
         if (recognition) {
             try { recognition.stop(); } catch (e) {}
         }
@@ -208,11 +256,11 @@ document.addEventListener('DOMContentLoaded', () => {
             isMuted = !isMuted;
             if (isMuted) {
                 window.speechSynthesis.cancel();
-                muteBtnLabel.textContent = "Unmute Audio";
-                muteAudioBtn.classList.add('text-error');
+                if (muteBtnLabel) muteBtnLabel.textContent = "Unmute Audio";
+                muteAudioBtn.classList.add('text-[#F05A3C]');
             } else {
-                muteBtnLabel.textContent = "Mute Audio";
-                muteAudioBtn.classList.remove('text-error');
+                if (muteBtnLabel) muteBtnLabel.textContent = "Mute Audio";
+                muteAudioBtn.classList.remove('text-[#F05A3C]');
             }
         });
     }
@@ -221,7 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (textInputToggleBtn && textInputRow) {
         textInputToggleBtn.addEventListener('click', () => {
             textInputRow.classList.toggle('hidden');
-            if (!textInputRow.classList.contains('hidden')) {
+            if (!textInputRow.classList.contains('hidden') && textInput) {
                 textInput.focus();
             }
         });
@@ -229,6 +277,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (sendBtn) {
         sendBtn.addEventListener('click', () => {
+            if (!textInput) return;
             const text = textInput.value.trim();
             if (text) {
                 if (transcriptEl) transcriptEl.textContent = text;
@@ -246,7 +295,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Send Request to Backend
     async function sendToAgent(text) {
-        if (consoleStatus) consoleStatus.textContent = "Running Gemini Agent...";
+        if (consoleStatus) consoleStatus.textContent = "RUNNING GEMINI AGENT...";
 
         try {
             const response = await fetch('/api/agent/run', {
@@ -264,20 +313,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Update Tool Execution Receipts Console
             if (data.tools_used && data.tools_used.length > 0) {
-                if (consoleStatus) consoleStatus.textContent = `Executed: ${data.tools_used.join(', ')}`;
+                if (consoleStatus) consoleStatus.textContent = `EXECUTED: ${data.tools_used.join(', ')}`;
                 if (toolExecutionBody) {
                     toolExecutionBody.innerHTML = data.tools_used.map(t => `
-                        <div class="bg-surface-container/60 border border-outline/10 p-3 rounded-lg mb-2">
-                            <span class="text-tertiary font-bold">⚡ Tool Execution Receipt: ${t}</span>
-                            <div class="text-on-surface-variant mt-1">Status: Success • Allowed Sandbox Context</div>
+                        <div class="bg-[#1D4039] border border-[#264D45] p-3 rounded-md mb-2 font-mono text-xs text-[#C7D83D]">
+                            <div class="font-bold">⚡ TOOL RECEIPT: ${t}</div>
+                            <div class="text-slate-300 text-[11px] mt-1">Status: OK • Sandbox Context Verified</div>
                         </div>
                     `).join('');
                 }
             } else {
-                if (consoleStatus) consoleStatus.textContent = "Direct Gemini Synthesis";
+                if (consoleStatus) consoleStatus.textContent = "DIRECT GEMINI SYNTHESIS";
                 if (toolExecutionBody) {
                     toolExecutionBody.innerHTML = `
-                        <div class="text-outline">
+                        <div class="text-slate-400 font-mono text-xs p-2">
                             <code>Direct Gemini LLM reply generated without tool invocation.</code>
                         </div>
                     `;
@@ -296,7 +345,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (error) {
             console.error("Agent error:", error);
             if (latestReply) latestReply.textContent = `Error: ${error.message}`;
-            if (consoleStatus) consoleStatus.textContent = "Execution Error";
+            if (consoleStatus) consoleStatus.textContent = "EXECUTION ERROR";
         }
     }
 
@@ -305,7 +354,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isMuted || !('speechSynthesis' in window)) return;
         window.speechSynthesis.cancel();
         const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = langSelect.value;
+        if (langSelect) utterance.lang = langSelect.value;
         if (voiceSelect && voiceSelect.value !== "" && availableVoices[voiceSelect.value]) {
             utterance.voice = availableVoices[voiceSelect.value];
         }
@@ -329,18 +378,26 @@ document.addEventListener('DOMContentLoaded', () => {
             historyList.innerHTML = '';
 
             if (data.messages && data.messages.length > 0) {
-                data.messages.forEach(msg => {
+                data.messages.forEach((msg, idx) => {
+                    const isUser = msg.role === 'user';
+                    const itemNum = String(idx + 1).padStart(3, '0');
                     const node = document.createElement('div');
-                    node.className = `bg-surface-container/50 border border-outline/10 p-3 rounded-xl text-xs ${msg.role === 'user' ? 'border-l-4 border-l-primary' : 'border-l-4 border-l-tertiary'}`;
+                    node.className = `p-3.5 rounded-md border border-[#171717] bg-[#FAF8F3] text-xs leading-relaxed transition-all ${
+                        isUser 
+                        ? 'border-l-4 border-l-[#F05A3C]' 
+                        : 'border-l-4 border-l-[#2457D6]'
+                    }`;
                     node.innerHTML = `
-                        <div class="font-label-mono-sm text-[10px] text-outline uppercase font-bold mb-1">${msg.role}</div>
-                        <div class="text-on-surface font-body-sm">${escapeHtml(msg.content)}</div>
+                        <div class="flex items-center justify-between font-mono text-[10px] uppercase font-bold mb-1.5 text-[#171717]">
+                            <span><span class="cursor-block"></span>TASK / ${itemNum} — ${isUser ? 'USER DIRECTIVE' : 'VOCALIS GEMINI AGENT'}</span>
+                        </div>
+                        <div class="text-[#171717] font-sans text-xs">${escapeHtml(msg.content)}</div>
                     `;
                     historyList.appendChild(node);
                 });
                 historyList.scrollTop = historyList.scrollHeight;
             } else {
-                historyList.innerHTML = '<div class="text-outline text-xs p-2">No conversation history recorded yet.</div>';
+                historyList.innerHTML = '<div class="text-[#525252] font-mono text-xs p-3 text-center border border-dashed border-[#171717] rounded-md">No conversation history recorded yet.</div>';
             }
         } catch (e) {
             console.error("Failed to load history:", e);
@@ -375,17 +432,17 @@ document.addEventListener('DOMContentLoaded', () => {
     if (startSimulatedCallBtn && simulatedPhoneInput && simulatedCallLog) {
         startSimulatedCallBtn.addEventListener('click', async () => {
             const phone = simulatedPhoneInput.value.trim() || '+1 (555) 019-2834';
-            simulatedCallLog.innerHTML += `<div class="text-primary mt-1">📞 Dialing Twilio session to ${escapeHtml(phone)}...</div>`;
+            simulatedCallLog.innerHTML += `<div class="text-[#C7D83D] mt-1 font-mono text-xs">📞 Dialing Twilio session to ${escapeHtml(phone)}...</div>`;
             simulatedCallLog.scrollTop = simulatedCallLog.scrollHeight;
 
             try {
                 const res = await fetch('/twilio/voice', { method: 'POST' });
                 const xmlText = await res.text();
-                simulatedCallLog.innerHTML += `<div class="text-tertiary mt-1">✅ TwiML Response:</div>`;
-                simulatedCallLog.innerHTML += `<div class="text-on-surface opacity-80">${escapeHtml(xmlText.substring(0, 140))}...</div>`;
+                simulatedCallLog.innerHTML += `<div class="text-white font-mono text-xs mt-1 font-bold">✅ TwiML Response:</div>`;
+                simulatedCallLog.innerHTML += `<div class="text-slate-300 font-mono text-[11px] p-2 bg-[#17352F] rounded border border-[#264D45] mt-1">${escapeHtml(xmlText.substring(0, 140))}...</div>`;
                 simulatedCallLog.scrollTop = simulatedCallLog.scrollHeight;
             } catch (err) {
-                simulatedCallLog.innerHTML += `<div class="text-error mt-1">❌ Connection error: ${err.message}</div>`;
+                simulatedCallLog.innerHTML += `<div class="text-[#F05A3C] font-mono text-xs mt-1">❌ Connection error: ${err.message}</div>`;
             }
         });
     }
